@@ -1,0 +1,19 @@
+{
+  "name": "homeautomationapi",
+  "version": "1.0.0",
+  "description": "A Home Automation API for Operating Systems/Linux class",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rubenwo/HomeAutomationAPI.git"
+  },
+  "author": "Ruben Woldhuis",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rubenwo/HomeAutomationAPI/issues"
+  },
+  "homepage": "https://github.com/rubenwo/HomeAutomationAPI#readme"
+}
