@@ -59,13 +59,13 @@ function createError(status, content) {
 
 // Root endpoint
 app.get('/', (req, res) => {
-    res.sendStatus(200)
+    //res.statusCode(200)
     res.sendFile(path.join(__dirname + '/index.html'));
 })
 
 // Get all available devices
 app.get('/devices', (req, res) => {
-    res.sendStatus(200)
+   // res.sendStatus(200)
     res.send(devices)
 })
 
