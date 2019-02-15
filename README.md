@@ -1,4 +1,4 @@
-# HomeAutomationAPI
+# Description
 School project for Operating Systems/Linux. We're making a Home Automation system that integrates many smart devices. From the Philips Hue bridge to smart plugs to even custom IR controllers. 
 
 # Components
