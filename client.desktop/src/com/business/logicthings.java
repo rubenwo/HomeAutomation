@@ -1,4 +1,4 @@
-package business;
+package com.business;
 
 public class logicthings {
 }
