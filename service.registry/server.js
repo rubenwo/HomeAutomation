@@ -28,15 +28,17 @@ const roomSchema = {
         "name": { "type": "string" },
         "devices": {
             "type": "array",
-            "items": { "type": "object" },
-            "properties": {
-                "identifier": { "type": "string" },
-                "name": { "type": "string" },
-                "device_type": { "type": "string" },
-                "controller_name": { "type": "string" },
-                "ip_address": { "type": "string" },
+            "items": {
+                "type": "object",
+                "properties": {
+                    "identifier": { "type": "string" },
+                    "name": { "type": "string" },
+                    "device_type": { "type": "string" },
+                    "controller_name": { "type": "string" },
+                    "ip_address": { "type": "string" },
+                },
+                "required": ["identifier", "name", "device_type", "controller_name", "ip_address"]
             },
-            "required": ["identifier", "name", "device_type", "controller_name", "ip_address"]
         }
     },
     "required": ["identifier", "name", "devices"]
@@ -65,7 +67,7 @@ app.get('/', (req, res) => {
 
 // Get all available devices
 app.get('/devices', (req, res) => {
-   // res.sendStatus(200)
+    // res.sendStatus(200)
     res.send(devices)
 })
 
