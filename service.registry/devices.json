@@ -5,9 +5,6 @@
         "device_type": "Hue",
         "controller_name": "controller-123",
         "ip_address": "192.168.2.123",
-        "room": {
-            "identifier": "bedroom",
-            "name": "Someone's Bedroom"
-        }
+        "room_identifier": "bedroom"
     }
 ]
