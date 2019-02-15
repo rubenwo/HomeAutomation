@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home Automation Registry API</title>
+</head>
+
+<body>
+    <h1 id="home-automation-device-registry">Home Automation Device Registry</h1>
+    <h2 id="usage">Usage</h2>
+    <h3 id="list-all-devices">List all devices</h3>
+    <p><strong>Definition</strong></p>
+    <p><code>GET /devices</code></p>
+    <p><strong>Response</strong></p>
+    <ul>
+        <li>200: success</li>
+    </ul>
+    <pre class="sourceCode json"><code class="sourceCode json">[
+    {
+        <span class="dt">&quot;identifier&quot;</span>: <span class="st">&quot;id1&quot;</span>,
+        <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Device 1&quot;</span>,
+        <span class="dt">&quot;device_type&quot;</span>: <span class="st">&quot;switch&quot;</span>,
+        <span class="dt">&quot;controller_name&quot;</span>: <span class="st">&quot;controller-1&quot;</span>,
+        <span class="dt">&quot;room&quot;</span>: {
+            <span class="dt">&quot;identifier&quot;</span>: <span class="st">&quot;bedroom&quot;</span>,
+            <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Ruben&#39;s Bedroom&quot;</span>
+        }
+    },
+    {
+        <span class="dt">&quot;identifier&quot;</span>: <span class="st">&quot;id2&quot;</span>,
+        <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Device 2&quot;</span>,
+        <span class="dt">&quot;device_type&quot;</span>: <span class="st">&quot;bulb&quot;</span>,
+        <span class="dt">&quot;controller_name&quot;</span>: <span class="st">&quot;controller-2&quot;</span>,
+        <span class="dt">&quot;room&quot;</span>: {
+            <span class="dt">&quot;identifier&quot;</span>: <span class="st">&quot;kitchen&quot;</span>,
+            <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Kitchen&quot;</span>
+        }
+    }
+]</code></pre>
+    <h3 id="register-a-new-device">Register a new device</h3>
+    <p><strong>Definition</strong></p>
+    <p><code>POST /devices</code></p>
+    <p><strong>Arguments</strong></p>
+    <ul>
+        <li><code>&quot;identifier&quot;:string</code> a globally unique identifier for this device</li>
+        <li><code>&quot;name&quot;:string</code> a friendly name for the device</li>
+        <li><code>&quot;device_type&quot;:string</code> the type of the device as understood by the client</li>
+        <li><code>&quot;room_identifier&quot;:string</code> the globally unique identifier of the room</li>
+        <li><code>&quot;controller_name&quot;:string</code> the name of the device's controller</li>
+        <li><code>&quot;attributes&quot;:object</code> arbitrary controller-specific information about the device</li>
+        <li><code>&quot;depends_on&quot;:array</code> an array of dependencies for this device
+            <ul>
+                <li><code>&quot;local_property&quot;:string</code> the name of the local property that has a dependency
+                </li>
+                <li><code>&quot;local_value&quot;:string</code> the value of the local property that has a dependency
+                </li>
+                <li><code>&quot;remote_device_identifier&quot;:string</code> the identifier of the device this property
+                    depends on</li>
+                <li><code>&quot;remote_property&quot;:string</code> the remote property that must be set</li>
+                <li><code>&quot;remote_value&quot;:string</code> the value of the remote property</li>
+            </ul>
+        </li>
+        <li><code>&quot;state_providers&quot;:array</code> names of external services that provide state</li>
+    </ul>
+    <p>If the identifier already exists, the existing device will be overwritten.</p>
+    <p><strong>Response</strong></p>
+    <ul>
+        <li>400: unknown room</li>
+        <li>201: created successfully</li>
+    </ul>
+    <p>Returns the new device if successful.</p>
+    <pre class="sourceCode json"><code class="sourceCode json">{
+    <span class="dt">&quot;identifier&quot;</span>: <span class="st">&quot;id1&quot;</span>,
+    <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Device 1&quot;</span>,
+    <span class="dt">&quot;device_type&quot;</span>: <span class="st">&quot;switch&quot;</span>,
+    <span class="dt">&quot;controller_name&quot;</span>: <span class="st">&quot;controller-2&quot;</span>,
+    <span class="dt">&quot;room&quot;</span>: {
+        <span class="dt">&quot;identifier&quot;</span>: <span class="st">&quot;bedroom&quot;</span>,
+        <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Ruben&#39;s Bedroom&quot;</span>
+    }
+}</code></pre>
+    <h3 id="lookup-device-details">Lookup device details</h3>
+    <p><strong>Definition</strong></p>
+    <p><code>GET /device/&lt;identifier&gt;</code></p>
+    <p><strong>Response</strong></p>
+    <ul>
+        <li>404: device not found</li>
+        <li>200: success</li>
+    </ul>
+    <pre class="sourceCode json"><code class="sourceCode json">{
+    <span class="dt">&quot;identifier&quot;</span>: <span class="st">&quot;id1&quot;</span>,
+    <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Device 1&quot;</span>,
+    <span class="dt">&quot;device_type&quot;</span>: <span class="st">&quot;switch&quot;</span>,
+    <span class="dt">&quot;controller_name&quot;</span>: <span class="st">&quot;controller-1&quot;</span>,
+    <span class="dt">&quot;room&quot;</span>: {
+        <span class="dt">&quot;identifier&quot;</span>: <span class="st">&quot;bedroom&quot;</span>,
+        <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Ruben&#39;s Bedroom&quot;</span>
+    }
+}</code></pre>
+    <h3 id="delete-a-device">Delete a device</h3>
+    <p><strong>Definition</strong></p>
+    <p><code>DELETE /device/&lt;identifier&gt;</code></p>
+    <p><strong>Response</strong></p>
+    <ul>
+        <li>404: device not found</li>
+        <li>204: success</li>
+    </ul>
+    <h3 id="list-rooms">List rooms</h3>
+    <p><strong>Definition</strong></p>
+    <p><code>GET /rooms</code></p>
+    <p><strong>Response</strong></p>
+    <ul>
+        <li>200: success</li>
+    </ul>
+    <pre class="sourceCode json"><code class="sourceCode json">[
+    {
+        <span class="dt">&quot;identifier&quot;</span>: <span class="st">&quot;bedroom&quot;</span>,
+        <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Ruben&#39;s Bedroom&quot;</span>,
+        <span class="dt">&quot;devices&quot;</span>: [
+            {
+                <span class="dt">&quot;identifier&quot;</span>: <span class="st">&quot;lamp1&quot;</span>,
+                <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Lamp&quot;</span>,
+                <span class="dt">&quot;device_type&quot;</span>: <span class="st">&quot;bulb&quot;</span>,
+                <span class="dt">&quot;controller_name&quot;</span>: <span class="st">&quot;controller-1&quot;</span>
+            }
+        ]
+    },
+    {
+        <span class="dt">&quot;identifier&quot;</span>: <span class="st">&quot;kitchen&quot;</span>,
+        <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Kitchen&quot;</span>,
+        <span class="dt">&quot;devices&quot;</span>: [
+            {
+                <span class="dt">&quot;identifier&quot;</span>: <span class="st">&quot;tv2&quot;</span>,
+                <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;TV&quot;</span>,
+                <span class="dt">&quot;device_type&quot;</span>: <span class="st">&quot;switch&quot;</span>,
+                <span class="dt">&quot;controller_name&quot;</span>: <span class="st">&quot;controller-2&quot;</span>
+            }
+        ]
+    }
+]</code></pre>
+    <h3 id="register-new-room">Register new room</h3>
+    <p><strong>Definition</strong></p>
+    <p><code>POST /rooms</code></p>
+    <p><strong>Arguments</strong></p>
+    <ul>
+        <li><code>&quot;identifier&quot;:string</code> a globally unique identifier for the room</li>
+        <li><code>&quot;name&quot;:string</code> a friendly name for the room</li>
+    </ul>
+    <p>If the identifier already exists, the existing room will be overwritten. Devices belonging to an existing room
+        will not be modified.</p>
+    <p><strong>Response</strong></p>
+    <ul>
+        <li>201: created successfully</li>
+    </ul>
+    <p>Returns the new room is created successfully.</p>
+    <pre class="sourceCode json"><code class="sourceCode json">{
+    <span class="dt">&quot;identifier&quot;</span>: <span class="st">&quot;bedroom&quot;</span>,
+    <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Ruben&#39;s Bedroom&quot;</span>,
+    <span class="dt">&quot;devices&quot;</span>: []
+}</code></pre>
+    <h3 id="lookup-room-details">Lookup room details</h3>
+    <p><strong>Definition</strong> <code>GET /room/&lt;identifier&gt;</code></p>
+    <p><strong>Response</strong></p>
+    <ul>
+        <li>404: room not found</li>
+        <li>200: success</li>
+    </ul>
+    <pre class="sourceCode json"><code class="sourceCode json">{
+    <span class="dt">&quot;identifier&quot;</span>: <span class="st">&quot;bedroom&quot;</span>,
+    <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Ruben&#39;s Bedroom&quot;</span>,
+    <span class="dt">&quot;devices&quot;</span>: [
+        {
+            <span class="dt">&quot;identifier&quot;</span>: <span class="st">&quot;id1&quot;</span>,
+            <span class="dt">&quot;name&quot;</span>: <span class="st">&quot;Device 1&quot;</span>,
+            <span class="dt">&quot;device_type&quot;</span>: <span class="st">&quot;switch&quot;</span>,
+            <span class="dt">&quot;controller_name&quot;</span>: <span class="st">&quot;controller-1&quot;</span>
+        }
+    ]
+}</code></pre>
+    <h3 id="delete-a-room">Delete a room</h3>
+    <p><strong>Definition</strong></p>
+    <p><code>DELETE /rooms/&lt;identifier&gt;</code></p>
+    <p><strong>Response</strong></p>
+    <ul>
+        <li>404: room not found</li>
+        <li>204: success</li>
+    </ul>
+
+</body>
+
+</html>

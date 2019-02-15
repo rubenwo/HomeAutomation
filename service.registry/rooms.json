@@ -1,0 +1,15 @@
+[
+    {
+        "identifier": "living room",
+        "name": "Main living room",
+        "devices": [
+            {
+                "identifier": "lamp1",
+                "name": "Lamp",
+                "device_type": "bulb",
+                "controller_name": "controller-1",
+                "ip_address": "192.168.2.123"
+            }
+        ]
+    }
+]
