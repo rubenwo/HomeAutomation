@@ -1,0 +1,16 @@
+{
+  "name": "service.event-bus",
+  "version": "1.0.0",
+  "description": "Event subscription service",
+  "main": "server.js",
+  "scripts": {
+    "server": "nodemon server.js"
+  },
+  "author": "Ruben Woldhuis",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "nodemon": "^1.18.10",
+    "ws": "^6.1.3"
+  }
+}
