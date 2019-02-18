@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.16.4",
-    "nodemon": "^1.18.10"
+    "nodemon": "^1.18.10",
+    "npm": "^6.8.0"
   }
 }
