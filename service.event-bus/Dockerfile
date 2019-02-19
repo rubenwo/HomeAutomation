@@ -1,10 +1,11 @@
-FROM node:8
-WORKDIR /user/src/app
+FROM golang:latest
+RUN mkdir /app
+ADD . /app/
 
-COPY package*.json ./
+RUN go get github.com/gorilla/mux && go get github.com/gorilla/websocket
 
-RUN npm install
-COPY . .
+WORKDIR /app
+RUN go build -o server .
+
 EXPOSE 80
-
-CMD ["npm", "start"]
+CMD ["/app/server"]
