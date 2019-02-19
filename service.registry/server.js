@@ -47,8 +47,6 @@ console.log(devices)
 console.log(rooms)
 
 //TODO: Handle errors & Send status
-//TODO: Verify body from request (check for duplicates and valid format)
-
 
 function createError(status, content) {
     let error = {
