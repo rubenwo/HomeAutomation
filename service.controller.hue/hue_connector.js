@@ -1,9 +1,9 @@
 const request = require('request')
 
 class Connector {
-    pair(callback) {
+    pair(url, callback) {
 
-        let url = "http://127.0.0.1/api"
+        
         let body = {
             "devicetype": "NodeJS-Controller"
         }
