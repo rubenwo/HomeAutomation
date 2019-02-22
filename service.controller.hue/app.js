@@ -54,15 +54,12 @@ app.get('/lamps', (req, res) => {
 app.get('/lamp/:identifier', (req, res) => {
     let id = req.params['identifier']
 
-    let body = {
-
-    }
     let URL = url + "/lights/" + id + "/state/"
     conn.sendRequest(
         URL,
-        body,
+        null,
         (err, resp, body) => {
-
+            console.log(body)
         }
     )
 })
