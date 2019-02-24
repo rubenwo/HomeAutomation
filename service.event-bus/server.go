@@ -21,7 +21,7 @@ func main() {
 	h = newHub()
 	router := mux.NewRouter()
 	router.HandleFunc("/update", updateEndpoint).Methods("POST")
-	router.Handle("/ws", wsHandler{h: h})
+	router.Handle("/sub", wsHandler{h: h})
 	log.Fatal(http.ListenAndServe(":80", router))
 }
 
@@ -29,11 +29,11 @@ func updateEndpoint(w http.ResponseWriter, r *http.Request) {
 	var s Status
 	if err := json.NewDecoder(r.Body).Decode(&s); err != nil {
 		log.Println(err)
-		w.WriteHeader(400)
+		w.WriteHeader(422)
 		return
 	}
 	data, err := json.Marshal(s)
-
+	w.WriteHeader(200)
 	if err != nil {
 		log.Println(err)
 	}
