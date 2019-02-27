@@ -1,9 +1,11 @@
 const express = require('express')
+const cors = require('cors')
 const app = express()
 const Ajv = require('ajv')
 const ajv = new Ajv()
 
 app.use(express.json())
+app.use(cors())
 
 const devices = require('./devices.json')
 const rooms = require('./rooms.json')
@@ -66,7 +68,10 @@ app.get('/', (req, res) => {
 // Get all available devices
 app.get('/devices', (req, res) => {
     // res.sendStatus(200)
-    res.send(devices)
+    const devs = {
+        devices: devices
+    }
+    res.send(devs)
 })
 
 // Add a new device
@@ -137,8 +142,10 @@ app.delete('/devices/:identifier', (req, res) => {
 
 // Get all available rooms
 app.get('/rooms', (req, res) => {
-    res.sendStatus(200)
-    res.send(rooms)
+    const r = {
+        rooms: rooms
+    }
+    res.send(r)
 })
 
 // Add a new room
