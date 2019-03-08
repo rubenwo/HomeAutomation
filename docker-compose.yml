@@ -1,0 +1,65 @@
+version: "3"
+
+services:
+  client.web:
+    build:
+      dockerfile: ./client.web/Dockerfile
+      context: .
+    image: home-automation-web-client
+    volumes:
+      - ./client.web:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 7000:80
+    env_file:
+      - ./.env
+
+  service.registry:
+    build:
+      dockerfile: ./service.registry/Dockerfile
+      context: .
+    image: home-automation-registry-service
+    volumes:
+      - ./service.registry:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 7001:80
+    env_file:
+      - ./.env
+
+  service.event-bus:
+    build:
+      dockerfile: ./service.event-bus/Dockerfile
+      context: .
+    image: home-automation-event-bus-service
+    volumes:
+      - .:/go/src/home-automation
+    ports:
+      - 7002:80
+    env_file:
+      - ./.env
+
+  service.controller.hue:
+    build:
+      dockerfile: ./service.controller.hue/Dockerfile
+      context: .
+    image: home-automation-hue-controller-service
+    volumes:
+      - ./service.controller.hue:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 7003:80
+    env_file:
+      - ./.env
+
+  service.api-gateway:
+    build:
+      dockerfile: ./service.api-gateway/Dockerfile
+      context: .
+    image: home-automation-api-gateway-service
+    volumes:
+      - .:/go/src/home-automation
+    ports:
+      - 80:80
+    env_file:
+      - ./.env

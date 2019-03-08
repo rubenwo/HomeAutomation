@@ -1,11 +1,14 @@
 FROM golang:latest
-RUN mkdir /app
-ADD . /app/
 
-RUN go get github.com/gorilla/mux && go get github.com/gorilla/websocket
+WORKDIR /go/src/imc-web-interface
+COPY . .
 
-WORKDIR /app
-RUN go build -o server .
+RUN go get -d -v ./...
+RUN CGO_ENABLED=0 GOOS=linux go install ./service.event-bus
 
-EXPOSE 80
-CMD ["/app/server"]
+FROM alpine:latest
+WORKDIR /root/
+COPY --from=0 /go/bin/service.event-bus .
+COPY --from=0 /go/src/imc-web-interface/service.event-bus/accounts.json .
+
+CMD ["./service.event-bus"]
