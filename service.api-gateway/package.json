@@ -3,13 +3,12 @@
   "version": "1.0.0",
   "description": "This is the api-gateway service. All request to the back-end microservices will need to go through this gateway.",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "author": "Ruben Woldhuis",
   "license": "MIT",
   "dependencies": {
     "express": "^4.16.4",
-    "express-http-proxy": "^1.5.1"
+    "express-http-proxy": "^1.5.1",
+    "http-proxy-middleware": "^0.19.1"
   }
 }

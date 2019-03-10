@@ -60,13 +60,13 @@ function createError(status, content) {
 
 
 // Root endpoint
-app.get('/', (req, res) => {
+app.get('/registry', (req, res) => {
     //res.statusCode(200)
     res.sendFile(path.join(__dirname + '/index.html'));
 })
 
 // Get all available devices
-app.get('/devices', (req, res) => {
+app.get('/registry/devices', (req, res) => {
     // res.sendStatus(200)
     const devs = {
         devices: devices
@@ -75,7 +75,7 @@ app.get('/devices', (req, res) => {
 })
 
 // Add a new device
-app.post('/devices', (req, res) => {
+app.post('/registry/devices', (req, res) => {
     let data = req.body
     let valid = ajv.validate(deviceSchema, data);
     if (!valid) console.log(ajv.errors);
@@ -98,7 +98,7 @@ app.post('/devices', (req, res) => {
 })
 
 // Get specific device details
-app.get('/devices/:identifier', (req, res) => {
+app.get('/registry/devices/:identifier', (req, res) => {
     let id
     try {
         id = req.params['identifier']
@@ -117,7 +117,7 @@ app.get('/devices/:identifier', (req, res) => {
 })
 
 // Delete a specific device
-app.delete('/devices/:identifier', (req, res) => {
+app.delete('/registry/devices/:identifier', (req, res) => {
     let id
     let found = false
     try {
@@ -141,7 +141,7 @@ app.delete('/devices/:identifier', (req, res) => {
 })
 
 // Get all available rooms
-app.get('/rooms', (req, res) => {
+app.get('/registry/rooms', (req, res) => {
     const r = {
         rooms: rooms
     }
@@ -149,7 +149,7 @@ app.get('/rooms', (req, res) => {
 })
 
 // Add a new room
-app.post('/rooms', (req, res) => {
+app.post('/registry/rooms', (req, res) => {
     let data = req.body
     let valid = ajv.validate(roomSchema, data);
     if (!valid) console.log(ajv.errors);
@@ -169,7 +169,7 @@ app.post('/rooms', (req, res) => {
 })
 
 // Get specific room details
-app.get('/rooms/:identifier', (req, res) => {
+app.get('/registry/rooms/:identifier', (req, res) => {
     let id
     try {
         id = req.params['identifier']
@@ -188,7 +188,7 @@ app.get('/rooms/:identifier', (req, res) => {
 })
 
 // Delete a specific room
-app.delete('/rooms/:identifier', (req, res) => {
+app.delete('/registry/rooms/:identifier', (req, res) => {
     let id
     let found = false
     try {

@@ -3,15 +3,11 @@
   "version": "1.0.0",
   "description": "Controller abstraction API for controlling Philips Hue lamps.",
   "main": "app.js",
-  "scripts": {
-    "server": "nodemon app.js"
-  },
+  "scripts": {},
   "author": "Ruben Woldhuis",
   "license": "MIT",
   "dependencies": {
     "express": "^4.16.4",
-    "nodemon": "^1.18.10",
-    "npm": "^6.8.0",
     "request": "^2.88.0"
   }
 }

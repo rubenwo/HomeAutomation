@@ -16,12 +16,12 @@ conn.pair(url, e => {
 
 
 // Documentation endpoint
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname + '/index.html'));
+app.get('/hue', (req, res) => {
+    res.sendFile(path.join(__dirname + './index.html'));
 })
 
 
-app.get('/pair', (req, res) => {
+app.get('/hue/pair', (req, res) => {
     conn.pair(url, e => {
         console.log("token: " + e)
         token = e
@@ -31,7 +31,7 @@ app.get('/pair', (req, res) => {
 })
 
 // Get all lamps connected to the Philips Hue Bridge
-app.get('/lamps', (req, res) => {
+app.get('/hue/lamps', (req, res) => {
     conn.sendRequest(
         url,
         "GET",
@@ -51,7 +51,7 @@ app.get('/lamps', (req, res) => {
 })
 
 // Get specific lamp details. Identifier identifies a lamp.
-app.get('/lamp/:identifier', (req, res) => {
+app.get('/hue/lamp/:identifier', (req, res) => {
     let id = req.params['identifier']
 
     let URL = url + "/lights/" + id + "/state/"
@@ -65,7 +65,7 @@ app.get('/lamp/:identifier', (req, res) => {
 })
 
 // Change lamp properties. Identifier identifies a lamp.
-app.post('/lamp/:identifier', (req, res) => {
+app.post('/hue/lamp/:identifier', (req, res) => {
     let id = req.params['identifier']
 
 
@@ -84,12 +84,12 @@ app.post('/lamp/:identifier', (req, res) => {
 })
 
 // Get all rooms configured on the Philips Hue Bridge
-app.get('/rooms', (req, res) => {
+app.get('/hue/rooms', (req, res) => {
 
 })
 
 // Create a new room on the Philips Hue Bridge
-app.post('/rooms', (req, res) => {
+app.post('/hue/rooms', (req, res) => {
 
 })
 

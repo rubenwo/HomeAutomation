@@ -10,7 +10,7 @@ export default {
   components: {},
   created() {
     axios
-      .get("http://localhost/rooms")
+      .get("http://localhost/registry/rooms")
       .then(res => console.log(res))
       .catch(err => console.log(err));
   }

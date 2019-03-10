@@ -10,6 +10,7 @@ import (
 
 var h *hub
 
+//Status is a struct used for sending and receiving updates from controllers
 type Status struct {
 	Identifier string      `json:"identifier, omitempty"`
 	Name       string      `json:"name, omitempty"`
@@ -20,8 +21,8 @@ type Status struct {
 func main() {
 	h = newHub()
 	router := mux.NewRouter()
-	router.HandleFunc("/update", updateEndpoint).Methods("POST")
-	router.Handle("/sub", wsHandler{h: h})
+	router.HandleFunc("/event-bus/update", updateEndpoint).Methods("POST")
+	router.Handle("/event-bus/sub", wsHandler{h: h})
 	log.Fatal(http.ListenAndServe(":80", router))
 }
 
