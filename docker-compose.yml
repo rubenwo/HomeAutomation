@@ -9,8 +9,6 @@ services:
     volumes:
       - ./client.web:/usr/src/app
       - /usr/src/app/node_modules
-    ports:
-      - 7000:80
     env_file:
       - ./.env
 
@@ -22,8 +20,6 @@ services:
     volumes:
       - ./service.registry:/usr/src/app
       - /usr/src/app/node_modules
-    ports:
-      - 7001:80
     env_file:
       - ./.env
 
@@ -34,8 +30,6 @@ services:
     image: home-automation-event-bus-service
     volumes:
       - .:/go/src/home-automation
-    ports:
-      - 7002:80
     env_file:
       - ./.env
 
@@ -47,8 +41,6 @@ services:
     volumes:
       - ./service.controller.hue:/usr/src/app
       - /usr/src/app/node_modules
-    ports:
-      - 7003:80
     env_file:
       - ./.env
 
@@ -58,8 +50,14 @@ services:
       context: .
     image: home-automation-api-gateway-service
     volumes:
-      - .:/go/src/home-automation
+      - ./service.api-gateway:/usr/src/app
+      - /usr/src/app/node_modules
     ports:
       - 80:80
     env_file:
       - ./.env
+    links:
+      - client.web
+      - service.controller.hue
+      - service.event-bus
+      - service.registry

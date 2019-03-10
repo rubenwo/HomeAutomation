@@ -93,6 +93,6 @@ app.post('/rooms', (req, res) => {
 
 })
 
-app.listen(8080, () => {
+app.listen(80, () => {
     console.log("Hue Service listening on port 80")
 })

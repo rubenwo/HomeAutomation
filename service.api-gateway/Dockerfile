@@ -1,14 +1,29 @@
-FROM golang:latest
+# ---- Base Node ----
+FROM node:latest AS base
+# Create app dir
+WORKDIR /app
 
-WORKDIR /go/src/imc-web-interface
-COPY . .
+# ---- Dependencies ----
+FROM base AS dependencies
+# Wildcard to ensure package.json AND package-lock.json are copied
+COPY ./service.api-gateway/package*.json ./
+# install dependencies
+RUN npm install
 
-RUN go get -d -v ./...
-RUN CGO_ENABLED=0 GOOS=linux go install ./service.api-gateway
+# ---- Copy Files/Build ----
+FROM dependencies AS build
+WORKDIR /app
+COPY ./service.api-gateway/src /app
+# Build react/vue/angular bundle static files uncomment if applicable
+# RUN npm run build
 
-FROM alpine:latest
-WORKDIR /root/
-COPY --from=0 /go/bin/service.api-gateway .
-COPY --from=0 /go/src/imc-web-interface/service.api-gateway/accounts.json .
+# ---- Release with Alpine ----
+FROM node:8.9-alpine AS release
+# Create app dir
+WORKDIR /app
 
-CMD ["./service.api-gateway"]
+COPY --from=dependencies /app/package.json ./
+# Install app dependencies
+RUN npm install --only=production
+COPY --from=build /app ./
+CMD ["node", "index.js"]

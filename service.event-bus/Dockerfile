@@ -1,6 +1,6 @@
-FROM golang:latest
+FROM golang:latest AS builder
 
-WORKDIR /go/src/imc-web-interface
+WORKDIR /go/src/home-automation
 COPY . .
 
 RUN go get -d -v ./...
@@ -8,7 +8,6 @@ RUN CGO_ENABLED=0 GOOS=linux go install ./service.event-bus
 
 FROM alpine:latest
 WORKDIR /root/
-COPY --from=0 /go/bin/service.event-bus .
-COPY --from=0 /go/src/imc-web-interface/service.event-bus/accounts.json .
+COPY --from=builder /go/bin/service.event-bus .
 
 CMD ["./service.event-bus"]

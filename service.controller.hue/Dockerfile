@@ -1,10 +1,29 @@
-FROM node:8
-WORKDIR /user/src/app
+# ---- Base Node ----
+FROM node:latest AS base
+# Create app dir
+WORKDIR /app
 
-COPY package*.json ./
-
+# ---- Dependencies ----
+FROM base AS dependencies
+# Wildcard to ensure package.json AND package-lock.json are copied
+COPY ./service.controller.hue/package*.json ./
+# install dependencies
 RUN npm install
-COPY . .
-EXPOSE 80
 
-CMD ["npm", "start"]
+# ---- Copy Files/Build ----
+FROM dependencies AS build
+WORKDIR /app
+COPY ./service.controller.hue/src /app
+# Build react/vue/angular bundle static files uncomment if applicable
+# RUN npm run build
+
+# ---- Release with Alpine ----
+FROM node:8.9-alpine AS release
+# Create app dir
+WORKDIR /app
+
+COPY --from=dependencies /app/package.json ./
+# Install app dependencies
+RUN npm install --only=production
+COPY --from=build /app ./
+CMD ["node", "app.js"]
