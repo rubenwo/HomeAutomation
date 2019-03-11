@@ -5,13 +5,12 @@
 ### Send command to controller
 **Definition**
 
-`POST /command`
+`POST /ir_controller/command`
 
 **Arguments**
 
 - `"command":string` the command the infrared LED should emit.
 - `"device":string` the device type. the controller uses this to determine which encoding table to use for emitting the command.
-- `"deviceID":string` a device id for the smart remote so the server knows which controller its communicating with with.
 
 If the identifier already exists, the existing device will be overwritten.
 
@@ -24,7 +23,7 @@ If the identifier already exists, the existing device will be overwritten.
 ### Get all known encoding tables from the controller.
 **Definition**
 
-`GET /encoding_tables`
+`GET /ir_controller/encoding_tables`
 
 **Response**
  returns a encoding table if the request was succesfull.
