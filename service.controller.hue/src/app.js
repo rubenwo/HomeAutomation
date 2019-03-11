@@ -64,6 +64,7 @@ app.get('/hue/lamps', (req, res) => { //endpoint
                 lights.lights.push(obj);
             }
             res.send(lights)
+            console.log(lights);
         }
     )
 })
