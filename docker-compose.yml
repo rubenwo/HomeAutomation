@@ -47,7 +47,7 @@ services:
   service.db:
     image: mongo
     volumes:
-      - .service.db/data:/data/db
+      - ./service.db/data:/data/db
     ports:
       - 27017:27017
 
