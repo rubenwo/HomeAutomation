@@ -35,7 +35,7 @@ Opens a websocket connection. The websocket forwards the update information ment
     "name": "Device 1",
     "type": "hue-controller",
     "data": {
-       
+       "example":"text"
     }
 }
 ```

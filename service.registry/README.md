@@ -5,7 +5,7 @@
 ### List all devices
 **Definition**
 
-`GET /devices`
+`GET /registry/devices`
 
 **Response**
 
@@ -39,7 +39,7 @@
 ### Register a new device
 **Definition**
 
-`POST /devices`
+`POST /registry/devices`
 
 **Arguments**
 
@@ -82,7 +82,7 @@ Returns the new device if successful.
 ### Lookup device details
 **Definition**
 
-`GET /device/<identifier>`
+`GET /registry/device/<identifier>`
 
 **Response**
 
@@ -105,7 +105,7 @@ Returns the new device if successful.
 ### Delete a device
 **Definition**
 
-`DELETE /device/<identifier>`
+`DELETE /registry/device/<identifier>`
 
 **Response**
 
@@ -115,7 +115,7 @@ Returns the new device if successful.
 ### List rooms
 **Definition**
 
-`GET /rooms`
+`GET /registry/rooms`
 
 **Response**
 
@@ -154,7 +154,7 @@ Returns the new device if successful.
 ### Register new room
 **Definition**
 
-`POST /rooms`
+`POST /registry/rooms`
 
 **Arguments**
 
@@ -180,7 +180,7 @@ Returns the new room is created successfully.
 
 ### Lookup room details
 **Definition**
-`GET /room/<identifier>`
+`GET /registry/room/<identifier>`
 
 **Response**
 
@@ -205,7 +205,7 @@ Returns the new room is created successfully.
 ### Delete a room
 **Definition**
 
-`DELETE /rooms/<identifier>`
+`DELETE /registry/rooms/<identifier>`
 
 **Response**
 
