@@ -11,6 +11,9 @@
 
 - `"command":string` the command the infrared LED should emit.
 - `"device":string` the device type. the controller uses this to determine which encoding table to use for emitting the command.
+- `"deviceID":string` a device id for the smart remote so the server knows which controller its communicating with with.
+
+If the identifier already exists, the existing device will be overwritten.
 
 **Response**
 
@@ -24,7 +27,7 @@
 `GET /encoding_tables`
 
 **Response**
-
+ returns a encoding table if the request was succesfull.
 
 ```json
 {
@@ -34,7 +37,17 @@
             "commands":[
                 "1",
                 "2",
-                "etc."
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "UP",
+                "DOWN",
+                "LEFT",
+                "RIGHT" 
             ]
         }
     ]

@@ -5,7 +5,7 @@
 ### Send update from a controller
 **Definition**
 
-`POST /update`
+`POST /event-bus/update`
 
 **Arguments**
 
@@ -23,7 +23,7 @@
 ### Subscribe to websocket updates
 **Definition**
 
-`GET /sub`
+`GET /event-bus/sub`
 
 **Response**
 
