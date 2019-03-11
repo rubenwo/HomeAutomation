@@ -4,7 +4,7 @@ const hue_connector = require('./hue_connector.js')
 
 
 let url = "http://127.0.0.1/api"
-let token = ""
+let token = "" //<username>
 
 const conn = new hue_connector.Connector()
 conn.pair(url, e => {
@@ -31,9 +31,15 @@ app.get('/hue/pair', (req, res) => {
 })
 
 // Get all lamps connected to the Philips Hue Bridge
-app.get('/hue/lamps', (req, res) => {
+app.get('/hue/lamps', (req, res) => { //endpoint
+
+    //let username = 'testtest'
+    let URL = url + '/' + token + '/lights'
+
+    // http://127.0.0.1/api/token/lights
+
     conn.sendRequest(
-        url,
+        URL,
         "GET",
         null,
         (err, resp, body) => {
@@ -53,44 +59,62 @@ app.get('/hue/lamps', (req, res) => {
 // Get specific lamp details. Identifier identifies a lamp.
 app.get('/hue/lamp/:identifier', (req, res) => {
     let id = req.params['identifier']
-
-    let URL = url + "/lights/" + id + "/state/"
+    let URL = url + '/' + token + "/lights/" + id // + "/state/"
     conn.sendRequest(
         URL,
         null,
         (err, resp, body) => {
             console.log(body)
+            res.send(body)
         }
     )
-})
+  })
 
 // Change lamp properties. Identifier identifies a lamp.
 app.post('/hue/lamp/:identifier', (req, res) => {
     let id = req.params['identifier']
+    let URL = url + '/' + token + "/lights/" + id + "/state/"
 
+    //BODY arguments:
+    let state = req.params['state']     // 0 or 1
+    let bri = req.params['brightness']  // value between 0 and 254
+    let hue = req.params['hue']         // value between 0 and 65535
+    let sat = req.params['saturation']  // value between 0 and 254
 
     let body = {
-
+        "on": + state,
+        "bri": + bri,
+        "hue": + hue,
+        "sat": + sat
     }
-    let URL = url + "/lights/" + id + "/state/"
 
     conn.sendRequest(
-        url,
+        URL,
         body,
         (err, resp, body) => {
-
+            console.log(body);
+            res.send(body);
         }
     )
 })
 
-// Get all rooms configured on the Philips Hue Bridge
-app.get('/hue/rooms', (req, res) => {
+// Change light state. Identifier identifies a lamp.
+app.post('/hue/lamp/:identifier', (req, res) => {
+    let id = req.params['identifier'] // lamp ID
+    let state = req.params['state'] // lamp status 0 of 1
 
-})
+    let body = {
+        "on": + state
+    }
 
-// Create a new room on the Philips Hue Bridge
-app.post('/hue/rooms', (req, res) => {
-
+    conn.sendRequest(
+        URL,
+        body,
+        (err, resp, body) => {
+            console.log(body);
+            res.send(body);
+        }
+    )
 })
 
 app.listen(80, () => {
