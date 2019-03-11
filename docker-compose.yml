@@ -44,6 +44,13 @@ services:
     env_file:
       - ./.env
 
+  service.db:
+    image: mongo
+    volumes:
+      - .service.db/data:/data/db
+    ports:
+      - 27017:27017
+
   service.api-gateway:
     build:
       dockerfile: ./service.api-gateway/Dockerfile
