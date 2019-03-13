@@ -45,11 +45,11 @@ services:
       - ./.env
 
   service.db:
-    image: mongo
+    image: redis:latest-alpine
     volumes:
-      - ./service.db/data:/data/db
+      - ./service.db/data:/data
     ports:
-      - 27017:27017
+      - 6379:6379
 
   service.api-gateway:
     build:
