@@ -16,6 +16,8 @@ import Notifications from "./components/NotificationPlugin";
 import MaterialDashboard from "./material-dashboard";
 
 import Chartist from "chartist";
+import EventConsumer from "./api/EventConsumer";
+import ApiClient from "./api/ApiClient";
 
 // configure router
 const router = new VueRouter({
@@ -31,6 +33,8 @@ Vue.use(GlobalComponents);
 Vue.use(GlobalDirectives);
 Vue.use(Notifications);
 
+export const apiClient = new ApiClient();
+
 /* eslint-disable no-new */
 new Vue({
   el: "#app",
@@ -40,3 +44,6 @@ new Vue({
     Chartist: Chartist
   }
 });
+
+const eventConsumer = new EventConsumer("ws://localhost/event-bus/sub", null);
+eventConsumer.listen();
