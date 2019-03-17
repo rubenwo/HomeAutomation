@@ -33,8 +33,8 @@ Vue.use(GlobalComponents);
 Vue.use(GlobalDirectives);
 Vue.use(Notifications);
 
-export const apiClient = new ApiClient();
-
+export const apiClient = new ApiClient("http://192.168.2.100");
+apiClient.fetchDevices();
 /* eslint-disable no-new */
 new Vue({
   el: "#app",
@@ -45,5 +45,5 @@ new Vue({
   }
 });
 
-const eventConsumer = new EventConsumer("ws://localhost/event-bus/sub", null);
+const eventConsumer = new EventConsumer("ws://192.168.2.100/event-bus/sub", null);
 eventConsumer.listen();
