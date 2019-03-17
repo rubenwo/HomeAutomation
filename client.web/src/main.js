@@ -34,7 +34,7 @@ Vue.use(GlobalDirectives);
 Vue.use(Notifications);
 
 export const apiClient = new ApiClient("http://192.168.2.100");
-apiClient.fetchDevices();
+
 /* eslint-disable no-new */
 new Vue({
   el: "#app",

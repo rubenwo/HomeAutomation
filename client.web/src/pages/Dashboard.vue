@@ -145,11 +145,7 @@
 </template>
 
 <script>
-import {
-  StatsCard,
-  ChartCard,
-} from "@/components";
-
+import { StatsCard, ChartCard } from "@/components";
 export default {
   components: {
     StatsCard,

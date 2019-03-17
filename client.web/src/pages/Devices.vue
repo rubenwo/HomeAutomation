@@ -4,10 +4,14 @@
 
 <script>
 import { StatsCard } from "@/components";
+import { apiClient } from "../main";
 
 export default {
   components: {
     StatsCard
+  },
+  created() {
+    apiClient.fetchDevices();
   },
   data() {
     return {
