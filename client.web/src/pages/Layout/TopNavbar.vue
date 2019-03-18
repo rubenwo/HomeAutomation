@@ -16,7 +16,6 @@
         </md-button>
 
         <div class="md-collapse">
-          
           <md-list>
             <md-list-item href="#/">
               <i class="material-icons">dashboard</i>
@@ -27,12 +26,16 @@
               <drop-down>
                 <a slot="title" class="dropdown-toggle" data-toggle="dropdown">
                   <i class="material-icons">notifications</i>
-                  <span class="notification">1</span>
+                  <span class="notification">{{notifications.length}}</span>
                   <p class="hidden-lg hidden-md">Notifications</p>
                 </a>
-                <ul class="dropdown-menu dropdown-menu-right">
+                <ul
+                  class="dropdown-menu dropdown-menu-right"
+                  v-bind:key="notication.identifier"
+                  v-for="notification in notifications"
+                >
                   <li>
-                    <a href="#/notifications">Test Notification</a>
+                    <a href="#/notifications">{{notification.name}}</a>
                   </li>
                 </ul>
               </drop-down>
@@ -46,9 +49,16 @@
 
 <script>
 export default {
+  components: {},
+  data() {
+    return { notifications: [] };
+  },
   methods: {
     toggleSidebar() {
       this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
+    },
+    addNotification(notification) {
+      this.notifications.push(notification);
     }
   }
 };

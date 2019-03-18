@@ -1,3 +1,5 @@
+import { TopNavbar } from "../pages/Layout/TopNavbar.vue"
+
 export default class EventConsumer {
     constructor(url, store) {
         this.url = url;
@@ -8,7 +10,9 @@ export default class EventConsumer {
     listen() {
         this.socket = new WebSocket(this.url);
         this.socket.onmessage = event => {
+
             console.log(event.data);
+            TopNavbar.addNotification(event.data)
         }
     }
 }
