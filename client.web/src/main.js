@@ -18,6 +18,7 @@ import MaterialDashboard from "./material-dashboard";
 import Chartist from "chartist";
 import EventConsumer from "./api/EventConsumer";
 import ApiClient from "./api/ApiClient";
+import TopNavbar from "./pages/Layout/TopNavbar.vue"
 
 // configure router
 const router = new VueRouter({
@@ -34,6 +35,7 @@ Vue.use(GlobalDirectives);
 Vue.use(Notifications);
 
 export const apiClient = new ApiClient("http://localhost");
+export const eventConsumer = new EventConsumer("ws://localhost/event-bus/sub", null);
 
 /* eslint-disable no-new */
 new Vue({
@@ -45,5 +47,4 @@ new Vue({
   }
 });
 
-const eventConsumer = new EventConsumer("ws://localhost/event-bus/sub", null);
-eventConsumer.listen();
+eventConsumer.listen(TopNavbar.methods.notify);

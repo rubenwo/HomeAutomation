@@ -29,11 +29,7 @@
                   <span class="notification">{{notifications.length}}</span>
                   <p class="hidden-lg hidden-md">Notifications</p>
                 </a>
-                <ul
-                  class="dropdown-menu dropdown-menu-right"
-                  v-bind:key="notication.identifier"
-                  v-for="notification in notifications"
-                >
+                <ul class="dropdown-menu dropdown-menu-right" v-for="notification in notifications">
                   <li>
                     <a href="#/notifications">{{notification.name}}</a>
                   </li>
@@ -48,17 +44,23 @@
 </template>
 
 <script>
+import { eventConsumer } from "../../main";
 export default {
   components: {},
+  created() {},
   data() {
-    return { notifications: [] };
+    return {
+      notifications: []
+    };
   },
   methods: {
-    toggleSidebar() {
+    toggleSidebar: function() {
       this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
     },
-    addNotification(notification) {
-      this.notifications.push(notification);
+    notify: function() {
+      console.log("In TopNavbar...");
+      let notifications = eventConsumer.getNotifications();
+      console.log(notifications);
     }
   }
 };
