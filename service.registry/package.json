@@ -8,8 +8,11 @@
   "license": "MIT",
   "dependencies": {
     "ajv": "^6.9.1",
+    "bluebird": "^3.5.3",
     "cors": "^2.8.5",
     "express": "^4.16.4",
-    "jsonschema": "^1.2.4"
+    "jsonschema": "^1.2.4",
+    "redis": "^2.8.0",
+    "request": "^2.88.0"
   }
 }

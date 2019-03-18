@@ -3,12 +3,22 @@ const cors = require('cors')
 const app = express()
 const Ajv = require('ajv')
 const ajv = new Ajv()
+const request = require('request')
+
+// Import redis client
+const redis = require('redis')
+// Import bluebird
+const bluebird = require('bluebird')
+// Make redis client asynchronous.
+bluebird.promisifyAll(redis);
+
+
 
 app.use(express.json())
 app.use(cors())
 
-const devices = require('./devices.json')
-const rooms = require('./rooms.json')
+let devices// = require('./devices.json')
+let rooms// = require('./rooms.json')
 const fs = require('fs')
 const path = require('path');
 const deviceSchema = {
@@ -45,11 +55,34 @@ const roomSchema = {
     },
     "required": ["identifier", "name", "devices"]
 }
-console.log(devices)
-console.log(rooms)
+
+setTimeout(() => {
+    // Creates redis client. host is ip-address of redis server. port is port number of the redis server.
+    client = redis.createClient({
+        host: "service.db",
+        port: "6379"
+    })
+    // Prints the error whenever the redis client returns an error.
+    client.on('error', err => {
+        console.log(err)
+        request.post(
+            "http://service.event-bus/event-bus/update",
+            {
+                json: {
+                    "error": "Database went down! Possible data loss!"
+                }
+            },
+            (err, resp, body) => console.log(resp)
+        )
+        client.quit();
+    })
+    initFromDatabase();
+}, 10000)
+
+//initFromFiles("rooms")
+//initFromFiles("devices")
 
 //TODO: Handle errors & Send status
-
 function createError(status, content) {
     let error = {
         "status": status,
@@ -58,6 +91,50 @@ function createError(status, content) {
     return error
 }
 
+function writeToDatabase(key, value) {
+    if (!key) {
+        return "can't save without key"
+    }
+    client.set(key, JSON.stringify(value), redis.print)
+}
+
+// Initialize from files on disk based on key. 
+// @key is a string (rooms or devices)
+function initFromFiles(key) {
+    console.log("Loading from files...")
+    if (key === 'rooms') {
+        rooms = require('./rooms.json')
+        console.log(rooms)
+        writeToDatabase("rooms", rooms)
+    }
+    if (key === 'devices') {
+        devices = require('./devices.json')
+        console.log(devices)
+        writeToDatabase("devices", devices)
+    }
+}
+
+// Initialize rooms and devices from database. Fallback is json files on disk
+function initFromDatabase() {
+    console.log("Loading from database...")
+    client.getAsync("rooms").then(res => {
+        if (res !== null) {
+            rooms = JSON.parse(res)
+            console.log(rooms)
+        } else {
+            initFromFiles("rooms")
+        }
+    }).then(
+        client.getAsync("devices").then(res => {
+            if (res !== null) {
+                devices = JSON.parse(res)
+                console.log(devices)
+            } else {
+                initFromDatabase("devices")
+            }
+        })
+    )
+}
 
 // Root endpoint
 app.get('/registry', (req, res) => {
@@ -89,7 +166,9 @@ app.post('/registry/devices', (req, res) => {
             "room_identifier": data["room_identifier"]
         }
         devices.push(json)
-        fs.writeFileSync('./devices.json', JSON.stringify(devices), 'utf8')
+        //fs.writeFileSync('./devices.json', JSON.stringify(devices), 'utf8')
+        writeToDatabase("devices", devices)
+
         res.setHeader("201", "Create device")
         res.send(devices)
     } else {
@@ -108,7 +187,7 @@ app.get('/registry/devices/:identifier', (req, res) => {
     }
     for (let i = 0; i < devices.length; i++) {
         if (devices[i].identifier === id) {
-            res.sendStatus(200)
+            res.setHeader(200)
             res.send(devices[i])
             return
         }
@@ -133,7 +212,8 @@ app.delete('/registry/devices/:identifier', (req, res) => {
         }
     }
     if (found) {
-        fs.writeFileSync('devices.json', JSON.stringify(devices), 'utf8')
+        //fs.writeFileSync('devices.json', JSON.stringify(devices), 'utf8')
+        writeToDatabase("devices", devices)
         res.sendStatus(204)
     } else {
         res.sendStatus(404)
@@ -160,9 +240,10 @@ app.post('/registry/rooms', (req, res) => {
             "devices": data["devices"]
         }
         rooms.push(json)
-        fs.writeFileSync('rooms.json', JSON.stringify(rooms), 'utf8')
+        //fs.writeFileSync('rooms.json', JSON.stringify(rooms), 'utf8')
+        writeToDatabase("rooms", rooms)
         res.setHeader("201", "Created room")
-        res.send(devices)
+        res.send(rooms)
     } else {
         res.sendStatus(422)
     }
@@ -204,7 +285,8 @@ app.delete('/registry/rooms/:identifier', (req, res) => {
         }
     }
     if (found) {
-        fs.writeFileSync('rooms.json', JSON.stringify(rooms), 'utf8')
+        // fs.writeFileSync('rooms.json', JSON.stringify(rooms), 'utf8')
+        writeToDatabase("rooms", rooms)
         res.sendStatus(204)
     } else {
         res.sendStatus(404)
