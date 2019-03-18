@@ -3,7 +3,7 @@
 **URL**
 - http://ip:port/api
 
-## Usage
+## Usage of this program
 
 
 ### Get documentation
@@ -27,7 +27,7 @@ Returns the documentation in an html document.
 - On success: 
     {
         "isValid": true,
-        "description": "token"
+        "description": "token/username"
     }
 
 - On failure: 
@@ -51,7 +51,7 @@ Returns the documentation in an html document.
         ]
     } 
 
-    Object:
+    Object structure:
         {
             "modelid": "LCT001",
             "name": "Hue Lamp 1",
@@ -86,6 +86,7 @@ Returns the documentation in an html document.
             "id": "1"
         }
 
+
 ### Get a specific Philips Hue Lamp
 **Definitions**
 `GET /hue/lamp/<id>`
@@ -94,7 +95,14 @@ Returns the documentation in an html document.
 - `"id":int` the ID of the lamp you want to request
 
 **Response**
-- On success: The description contains the JSON object of the lamp you requested for:
+- On success: Returns a big JSON object. This object consists a array with lamp objects. These objects each consist of lamp attributes such as; on, brightness, hue etc.
+
+    let response = {
+        isValid: false,
+        description: ''
+    }
+
+
     {
         "isValid": true,
         "description": {
@@ -140,17 +148,6 @@ Returns the documentation in an html document.
         "description": "resource, /lights/ID, not available"
     }
 
-
-**Response**
-- On success: Returns a big JSON object. This object consists a array with lamp objects. These objects each consist of lamp attributes such as; on, brightness, hue etc.
-
-let response = {
-    isValid: false,
-    description: ''
-}
-
-- On failure: Returns a object with a error, this error contains a description with 
-
 ### Set a specific Philips Hue Lamp
 **Definition**
 `PUT /lamp/<id>/state/`
@@ -158,9 +155,25 @@ let response = {
 **Arguments**
 - `"id":int` the ID of the lamp you want to request
 
+    Arguments for the lamps:
+    - `"on":boolean` the state you want to put the light in
+    - `"bri":int` Brightness, value between 0 and 254
+    - `"hue":int` Hue color, value between 0 and 65535 in Hue.
+    - `"sat":int` Saturation, value between 0 and 254
+
 **Response**
+- If the response is valid:
 
+    let response = {
+        isValid: true,
+        description: '/lights/<id>/state/etc.'
+    }
 
+- Else e.g. 'invalid value, <value>, for parameter, <param>
+    {
+        "isValid": false,
+        "description": "invalid value, 20000 , for parameter, sat"
+    }
 
 
 ### Send command to controller
