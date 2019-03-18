@@ -2,7 +2,6 @@ const express = require('express')
 const app = express()
 const hue_connector = require('./hue_connector.js')
 
-
 let url = "http://127.0.0.1/api"
 let token = "" //<username>
 
@@ -15,6 +14,8 @@ app.get('/hue', (req, res) => {
     res.sendFile(path.join(__dirname + '/index.html'));
 })
 
+
+//Pair function to pair the lamps to the application
 let getUser = app.get('/hue/pair', (req, res) => {
     
     let body = {
@@ -37,11 +38,12 @@ let getUser = app.get('/hue/pair', (req, res) => {
             response.isValid = true
             response.description = token;
             res.status(200).json(response);
+            
         }
     })
 })
 
-// Get all lamps connected to the Philips Hue Bridge
+// Get all lamps connected to the Philips Hue Bridge. Comes with all the parameters of each lamp
 app.get('/hue/lamps', (req, res) => { //endpoint
 
     //let username = 'testtest'
@@ -69,7 +71,7 @@ app.get('/hue/lamps', (req, res) => { //endpoint
     )
 })
 
-// Get specific lamp details. Identifier identifies a lamp.
+// Get the details of a specific lamp. Identifier is used to identify a lamp.
 app.get('/hue/lamp/:identifier', (req, res) => {
     let id = req.params['identifier']
     let URL = url + '/' + token + "/lights/" + id
@@ -102,21 +104,23 @@ app.get('/hue/lamp/:identifier', (req, res) => {
   })
 
 // Change lamp properties. Identifier identifies a lamp.
+
+// Params:
+// On: stands for the state of the light
+// Bri: stands for the brightness of the light; value must be between 0 and 254 (int)
+// Hue: stands for the colour of the light; value must be between 0 and 65535 (int)
+// Sat: stands for the saturaion of the light; value must be between 0 and 254 (int)
 app.put('/hue/lamp/:identifier', (req, res) => {
     let id = req.params['identifier']
-    let URL = url + '/' + token + "/lights/" + id + "/state/"
+    let URL = url + '/' + token + "/lights/" + id + "/state/" 
 
-    // TODO: checken of put body niet null is anders crash!
-
-
-    //BODY arguments:
-    let on = req.body["on"]     // true or false
-    let bri = req.body['brightness']  // value between 0 and 254
-    let hue = req.body['hue']         // value between 0 and 65535
-    let sat = req.body['saturation']  // value between 0 and 254
+    let on = req.body["on"]     //true or false
+    let bri = req.body['bri']
+    let hue = req.body['hue']
+    let sat = req.body['sat']
 
     let body = {
-        "on":  on,
+        "on": on,
         "bri": bri,
         "hue": hue,
         "sat": sat
@@ -132,7 +136,7 @@ app.put('/hue/lamp/:identifier', (req, res) => {
         "PUT",
         body,
         (err, resp, body) => {
-
+        
             if(body[0].error) {
                 response.isValid = false
                 response.description = body[0].error.description
@@ -146,25 +150,7 @@ app.put('/hue/lamp/:identifier', (req, res) => {
     )
 })
 
-// Change light state. Identifier identifies a lamp.
-app.post('/hue/lamp/:identifier', (req, res) => {
-    let id = req.params['identifier'] // lamp ID
-    let state = req.params['state'] // lamp status 0 of 1
-
-    let body = {
-        "on": + state
-    }
-
-    conn.sendRequest(
-        URL,
-        body,
-        (err, resp, body) => {
-            console.log(body);
-            res.send(body);
-        }
-    )
-})
-
+//Opens a listen connection on port 8000
 app.listen(8000, () => {
     console.log("Hue Service listening on port 8000")
 })
