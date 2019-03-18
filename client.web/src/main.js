@@ -1,10 +1,49 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
+// The Vue build version to load with the `import` command
+// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+import Vue from "vue";
+import VueRouter from "vue-router";
+import App from "./App";
 
-Vue.config.productionTip = false
+// router setup
+import routes from "./routes/routes";
 
+// Plugins
+import GlobalComponents from "./globalComponents";
+import GlobalDirectives from "./globalDirectives";
+import Notifications from "./components/NotificationPlugin";
+
+// MaterialDashboard plugin
+import MaterialDashboard from "./material-dashboard";
+
+import Chartist from "chartist";
+import EventConsumer from "./api/EventConsumer";
+import ApiClient from "./api/ApiClient";
+
+// configure router
+const router = new VueRouter({
+  routes, // short for routes: routes
+  linkExactActiveClass: "nav-item active"
+});
+
+Vue.prototype.$Chartist = Chartist;
+
+Vue.use(VueRouter);
+Vue.use(MaterialDashboard);
+Vue.use(GlobalComponents);
+Vue.use(GlobalDirectives);
+Vue.use(Notifications);
+
+export const apiClient = new ApiClient("http://192.168.2.100");
+
+/* eslint-disable no-new */
 new Vue({
+  el: "#app",
+  render: h => h(App),
   router,
-  render: h => h(App)
-}).$mount('#app')
+  data: {
+    Chartist: Chartist
+  }
+});
+
+const eventConsumer = new EventConsumer("ws://192.168.2.100/event-bus/sub", null);
+eventConsumer.listen();

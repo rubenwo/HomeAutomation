@@ -38,3 +38,13 @@
 **Response**
 
 - Defined in service.event-bus
+
+
+### Other requests
+**Definition**
+
+- All other requests are forwarded to the static web server
+
+**Response**
+
+- Web pages

@@ -44,6 +44,13 @@ services:
     env_file:
       - ./.env
 
+  service.db:
+    image: redis:4-alpine
+    volumes:
+      - ./service.db/data:/data
+    ports:
+      - 6379:6379
+
   service.api-gateway:
     build:
       dockerfile: ./service.api-gateway/Dockerfile
