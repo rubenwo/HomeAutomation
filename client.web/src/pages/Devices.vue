@@ -1,25 +1,25 @@
 <template>
-<div class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25">
-        <stats-card data-background-color="green">
-          <template slot="header">
-            <md-icon>store</md-icon>
-          </template>
+  <div class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25">
+    <stats-card data-background-color="green">
+      <template slot="header">
+        <md-icon>store</md-icon>
+      </template>
 
-          <template slot="content">
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider round"></span>
-            </label>
-            <h3 class="title">Hue Lamp</h3>
-          </template>
+      <template slot="content">
+        <label class="switch">
+          <input type="checkbox">
+          <span class="slider round"></span>
+        </label>
+        <h3 class="title">Hue Lamp</h3>
+      </template>
 
-          <template slot="footer">
-            <div class="stats">
-              <md-icon>date_range</md-icon>Last 24 Hours
-            </div>
-          </template>
-        </stats-card>
-      </div>
+      <template slot="footer">
+        <div class="stats">
+          <md-icon>date_range</md-icon>Last 24 Hours
+        </div>
+      </template>
+    </stats-card>
+  </div>
 </template>
 
 <script>
@@ -30,25 +30,27 @@ export default {
   components: {
     StatsCard
   },
-  created() {
-    apiClient.fetchDevices();
+  async created() {
+    let devices = await apiClient.fetchDevices();
+    
+    console.log(devices);
   },
   data() {
     return {
-        responsiveOptions: [
-          [
-            "screen and (max-width: 640px)",
-            {
-              seriesBarDistance: 5,
-              axisX: {
-                labelInterpolationFnc: function(value) {
-                  return value[0];
-                }
+      responsiveOptions: [
+        [
+          "screen and (max-width: 640px)",
+          {
+            seriesBarDistance: 5,
+            axisX: {
+              labelInterpolationFnc: function(value) {
+                return value[0];
               }
             }
-          ]
+          }
         ]
-      }
+      ]
+    };
   }
 };
 </script>
@@ -78,8 +80,8 @@ export default {
   right: 0;
   bottom: 0;
   background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 .slider:before {
@@ -90,16 +92,16 @@ export default {
   left: 4px;
   bottom: 4px;
   background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: #2196f3;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px #2196f3;
 }
 
 input:checked + .slider:before {

@@ -9,15 +9,13 @@ export default class ApiClient {
         console.log(url, method, body)
     }
 
-    fetchDevices() {
-        axios.get(this.apiGatewayUrl + "/registry/devices")
-            .then(res => console.log(res.data.devices))
-            .catch(err => console.log(err));
+    async fetchDevices() {
+        let response = await axios.get(this.apiGatewayUrl + "/registry/devices")
+        return response.data.devices;
     }
 
-    fetchRooms() {
-        axios.get(this.apiGatewayUrl + "/registry/rooms")
-            .then(res => console.log(res.data.rooms))
-            .catch(err => console.log(err));
+    async fetchRooms() {
+        let response = await axios.get(this.apiGatewayUrl + "/registry/rooms")
+        return response.data.rooms;
     }
 }
