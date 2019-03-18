@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -33,6 +34,7 @@ func updateEndpoint(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(422)
 		return
 	}
+	fmt.Println(s)
 	data, err := json.Marshal(s)
 	w.WriteHeader(200)
 	if err != nil {
