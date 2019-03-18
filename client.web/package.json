@@ -23,7 +23,7 @@
     "@vue/cli-plugin-babel": "3.4.0",
     "@vue/cli-plugin-eslint": "3.4.0",
     "@vue/cli-service": "3.4.0",
-    "@vue/eslint-config-prettier": "4.0.1",
+    "@vue/eslint-config-prettier": "^4.0.1",
     "es6-promise": "4.2.5",
     "eslint-plugin-vue": "5.1.0",
     "node-sass": "4.11.0",
