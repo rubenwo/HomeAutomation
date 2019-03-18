@@ -1,24 +1,29 @@
 <template>
-  <div class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25">
-    <stats-card data-background-color="green">
-      <template slot="header">
-        <md-icon>store</md-icon>
-      </template>
+  <div class="content">
+    <div class="md-layout" v-bind:key="device.controller_name" v-for="device in devices">
+      <div class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25">
+        <stats-card data-background-color="green">
+          <template slot="header">
+            <md-icon>store</md-icon>
+          </template>
 
-      <template slot="content">
-        <label class="switch">
-          <input type="checkbox">
-          <span class="slider round"></span>
-        </label>
-        <h3 class="title">Hue Lamp</h3>
-      </template>
+          <template slot="content">
+            <label class="switch">
+              <input type="checkbox">
+              <span class="slider round"></span>
+            </label>
+            <h3 class="title">{{device.name}}</h3>
+            <h4>{{device.device_type}}</h4>
+          </template>
 
-      <template slot="footer">
-        <div class="stats">
-          <md-icon>date_range</md-icon>Last 24 Hours
-        </div>
-      </template>
-    </stats-card>
+          <template slot="footer">
+            <div class="stats">
+              <md-icon>date_range</md-icon>Last 24 Hours
+            </div>
+          </template>
+        </stats-card>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -32,11 +37,13 @@ export default {
   },
   async created() {
     let devices = await apiClient.fetchDevices();
-    
-    console.log(devices);
+    if (devices) {
+      this.devices = devices;
+    }
   },
   data() {
     return {
+      devices: [],
       responsiveOptions: [
         [
           "screen and (max-width: 640px)",
