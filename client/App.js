@@ -1,54 +1,62 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- * @lint-ignore-every XPLATJSCOPYRIGHT1
- */
+import React from 'react';
+import axios from 'axios';
 
-import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { Platform, StyleSheet, Text, View, FlatList, Alert, ActivityIndicator} from 'react-native';
+import ApiClient from "./api/ApiClient";
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+export const apiClient = new ApiClient("http://localhost:8005");
 
-type Props = {};
-export default class App extends Component<Props> {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.test}>This is a test</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
-    );
+export default class App extends React.Component{
+ 
+
+ constructor(props) {
+   super(props);
+
+   state = {
+    isLoading: true,
   }
+ }
+
+ async componentDidMount() {
+    let response = await apiClient.fetchDevices();
+    this.setState({
+      isLoading: false,
+      dataSource: response
+    })
+    console.log(this.state.dataSource)
+ }
+
+  getGridViewItem(light_name) {
+    Alert.alert(light_name);
+  }
+
+
+ render() {
+  if(this.state.isLoading) {
+    return (
+      <View style = {styles.ActivityIndicator_Style}>
+        <ActivityIndicator size = "large" />
+      </View>
+    )
+  }
+
+   return (
+     <View>
+
+     </View>
+   );
+ }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  test: {
 
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  ActivityIndicator_Style : {
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    postion: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
 });
