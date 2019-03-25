@@ -66,3 +66,4 @@ func (wsh wsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	wg.Wait()
 	wsConn.Close()
 }
+

@@ -32,7 +32,7 @@ public class EventBusService extends WebSocketClient {
 
     @Override
     public void onMessage(String message) {
-        this.callback.OnEvent(new Event());
+        this.callback.OnEvent(Event.fromJson(message));
         Log.d("EVENT_TAG", "onMessage: " + message);
     }
 
