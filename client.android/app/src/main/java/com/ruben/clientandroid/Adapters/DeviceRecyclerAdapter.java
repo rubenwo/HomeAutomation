@@ -11,7 +11,8 @@ import android.widget.TextView;
 
 import com.ruben.clientandroid.Models.Device;
 import com.ruben.clientandroid.R;
-import com.ruben.clientandroid.View.SettingsActivity;
+import com.ruben.clientandroid.View.HueActivity;
+import com.ruben.clientandroid.View.IRActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -57,12 +58,29 @@ public class DeviceRecyclerAdapter extends RecyclerView.Adapter<DeviceRecyclerAd
             title = view.findViewById(R.id.device_name);
             type = view.findViewById(R.id.device_type);
             background = view.findViewById(R.id.device_view);
-            background.setOnClickListener(v -> {
-                Device i = dataSource.get(getAdapterPosition());
-                Intent intent = new Intent(context, SettingsActivity.class);
-                intent.putExtra("DEVICE", i);
-                mContext.startActivity(intent);
-            });
+
+            switch (dataSource.get(getAdapterPosition()).getDevice_type().toLowerCase()) {
+                case "hue":
+                    background.setOnClickListener(v -> {
+                        Device i = dataSource.get(getAdapterPosition());
+                        Intent intent = new Intent(context, HueActivity.class);
+                        intent.putExtra("DEVICE", i);
+                        mContext.startActivity(intent);
+                    });
+                    break;
+                case "ir-controller":
+                    background.setOnClickListener(v -> {
+                        Device i = dataSource.get(getAdapterPosition());
+                        Intent intent = new Intent(context, IRActivity.class);
+                        intent.putExtra("DEVICE", i);
+                        mContext.startActivity(intent);
+                    });
+                    break;
+                default:
+                    break;
+            }
+
+
         }
 
     }

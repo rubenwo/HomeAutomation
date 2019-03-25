@@ -6,11 +6,17 @@ import com.android.volley.toolbox.JsonRequest;
 import com.ruben.clientandroid.Api.volley.VolleyCallback;
 import com.ruben.clientandroid.Api.volley.VolleyRequest;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class GetEncodingTableRequest implements VolleyRequest {
-    private VolleyCallback callback;
+    private VolleyCallback<Map<String, String[]>> callback;
     private String url;
 
-    public GetEncodingTableRequest(VolleyCallback callback, String url) {
+    public GetEncodingTableRequest(VolleyCallback<Map<String, String[]>> callback, String url) {
         this.callback = callback;
         this.url = url;
     }
@@ -27,7 +33,20 @@ public class GetEncodingTableRequest implements VolleyRequest {
                 this.url,
                 null,
                 response -> {
-                    this.callback.OnResponse(response);
+                    try {
+                        Map<String, String[]> encodings = new HashMap<>();
+
+                        JSONArray array = response.getJSONArray("encodings");
+
+                        // for (int i = 0; i < array.length(); i++) {
+                        //    encodings.add(array.getString(i));
+                        // }
+
+                        this.callback.OnResponse(encodings);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        this.callback.OnError(new Error(e.getMessage()));
+                    }
                 },
                 error -> {
                     this.callback.OnError(new Error(error.getMessage()));
