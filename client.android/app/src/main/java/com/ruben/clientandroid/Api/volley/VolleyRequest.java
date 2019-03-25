@@ -4,5 +4,6 @@ import com.android.volley.toolbox.JsonRequest;
 
 public interface VolleyRequest {
     VolleyCallback GetCallback();
+
     JsonRequest DoRequest();
 }

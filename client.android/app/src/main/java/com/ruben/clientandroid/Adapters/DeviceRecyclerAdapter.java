@@ -1,9 +1,9 @@
 package com.ruben.clientandroid.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.ruben.clientandroid.Models.Device;
 import com.ruben.clientandroid.R;
+import com.ruben.clientandroid.View.SettingsActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -57,7 +58,10 @@ public class DeviceRecyclerAdapter extends RecyclerView.Adapter<DeviceRecyclerAd
             type = view.findViewById(R.id.device_type);
             background = view.findViewById(R.id.device_view);
             background.setOnClickListener(v -> {
-                Log.d("VIEWHOLDER_TAG", "Clicked on: " + title.getText());
+                Device i = dataSource.get(getAdapterPosition());
+                Intent intent = new Intent(context, SettingsActivity.class);
+                intent.putExtra("DEVICE", i);
+                mContext.startActivity(intent);
             });
         }
 

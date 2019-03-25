@@ -2,7 +2,9 @@ package com.ruben.clientandroid.Models;
 
 import com.ruben.clientandroid.Contants;
 
-public class Device {
+import java.io.Serializable;
+
+public class Device implements Serializable {
     private String identifier;
     private String name;
     private String device_type;
