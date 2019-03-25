@@ -19,6 +19,11 @@ export default class ApiClient {
         return response.data.rooms;
     }
 
+    async fetchDeviceByID(id){
+        let response = await axios.get(this.apiGatewayUrl + "/registry/devices/"+id)
+        return response.data;
+    }
+
     async getUser(){
         let response = await axios.get(this.apiGatewayUrl + "/hue/pair")
         return response.data.user;

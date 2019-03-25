@@ -1,10 +1,8 @@
 <template>
   <div class="content">
-    <div class="popup">
-             <button v-on:click: v-bind:href="'#/settings/'+config.id">Click me</button>
-          </div>
     <div class="md-layout" v-bind:key="device.controller_name" v-for="device in devices">
       <div class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25">
+        <a v-bind:href="'#/settings/'+device.identifier">
         <stats-card data-background-color="green">
           <template slot="header">
             <md-icon>store</md-icon>
@@ -24,6 +22,7 @@
             </div>
           </template>
         </stats-card>
+        </a>
       </div>
     </div>
   </div>
