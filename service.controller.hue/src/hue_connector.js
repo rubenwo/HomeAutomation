@@ -26,6 +26,12 @@ class Connector {
                     (err, resp, body) => callback(err, resp, body)
                 )
                 break;
+            case "DELETE":
+                request.delete(
+                    url,
+                    { json: body},
+                    (err, resp, body) => callback(err, resp, body)
+                )
         }
     }
 }
