@@ -1,12 +1,14 @@
 <template>
   <div class="content">
+    <div class="popup">
+             <button v-on:click: v-bind:href="'#/settings/'+config.id">Click me</button>
+          </div>
     <div class="md-layout" v-bind:key="device.controller_name" v-for="device in devices">
       <div class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25">
         <stats-card data-background-color="green">
           <template slot="header">
             <md-icon>store</md-icon>
           </template>
-
           <template slot="content">
             <label class="switch">
               <input type="checkbox">
@@ -31,11 +33,17 @@
 import { StatsCard } from "@/components";
 import { apiClient } from "../main";
 
+
+
+
 export default {
   components: {
-    StatsCard
+    StatsCard,
   },
+
   async created() {
+    let id = this.$route.params.id;
+    let device = await apiClient.fetchDevices(id);
     let devices = await apiClient.fetchDevices();
     if (devices) {
       this.devices = devices;
@@ -58,6 +66,16 @@ export default {
         ]
       ]
     };
+  },
+  methods:{
+div_show()
+            {
+
+            },
+myFunction() {
+ 
+  
+}
   }
 };
 </script>
@@ -125,5 +143,56 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
-</style>
 
+.popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* The actual popup (appears on top) */
+.popup .popuptext {
+  visibility: hidden;
+  width: 160px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class when clicking on the popup container (hide and show the popup) */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;} 
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+</style>
