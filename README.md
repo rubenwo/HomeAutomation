@@ -14,5 +14,5 @@ The project uses many different languages, mostly as a learning exercise.
 
 ### Clients
 - Web client (VueJS)
-- Android Client (React-Native)
-- IOS Client (React-Native)
+- Android Client (Java)
+- IOS Client (Swift)
