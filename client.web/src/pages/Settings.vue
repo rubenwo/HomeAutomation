@@ -17,28 +17,24 @@ export default {
     let id = this.$route.params.id;
     let device = await apiClient.fetchDeviceByID(id);
     this.device = device;
+    this.model.id = this.device.identifier;
+    this.model.name= this.device.name;
+    this.model.type = this.device.device_type;
+    this.model.controller_name = this.device.controller_name;
+    this.model.ip_address = this.device.ip_address;
+    this.model.room_identifier = this.device.room_identifier;
     console.log(this.device)
   },
   data() {
     return {
       device: {},
       model: {
-        id: 0,
-        time: "",
-        date: "",
-        timezone: [],
-        timesync: true,
-        volume: "",
-        treble: "",
-        bass: "",
+        id: "",
+        name: "",
+        type: "",
+        controller_name: "",
         ip_address: "",
-        port: 0,
-        route: "",
-        alarm_time: "",
-        re_arm: false,
-        audio_type: [],
-        alarm_radio_channel: [],
-        factory_reset: false
+        room_identifier: ""
       },
       schema: {
         fields: [
@@ -53,148 +49,43 @@ export default {
           {
             type: "input",
             inputType: "text",
-            label: "Time",
-            model: "time",
-            placeholder: "00:00",
+            label: "Name",
+            model: "name",
+            placeholder: "name",
             featured: true,
             required: true
           },
           {
             type: "input",
             inputType: "text",
-            label: "Date",
-            model: "date",
-            placeholder: "yy/mm/dd",
-            featured: true,
-            required: true
-          },
-          {
-            type: "select",
-            label: "Timezone",
-            model: "timezone",
-            values: [
-              0,
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9,
-              10,
-              11,
-              12,
-              -1,
-              -3,
-              -4,
-              -5,
-              -6,
-              -7,
-              -8,
-              -9,
-              -10,
-              -11,
-              -12
-            ],
-            required: true
-          },
-          {
-            type: "checkbox",
-            label: "Timesync",
-            model: "timesync",
-            default: true
-          },
-          {
+            label: "Type",
+            model: "type",
+            readonly: true,
+            disabled: true
+          }, {
             type: "input",
             inputType: "text",
-            label: "Volume",
-            model: "volume",
-            placeholder: 0,
+            label: "Controller Name",
+            model: "controller_name",
+            placeholder: "name",
             featured: true,
             required: true
-          },
-          {
+          }, {
             type: "input",
             inputType: "text",
-            label: "Treble",
-            model: "treble",
-            placeholder: 0,
-            featured: true,
-            required: true
-          },
-          {
-            type: "input",
-            inputType: "text",
-            label: "Bass",
-            model: "bass",
-            placeholder: 0,
-            featured: true,
-            required: true
-          },
-          {
-            type: "input",
-            inputType: "text",
-            label: "Radio IP Address",
+            label: "IP Address",
             model: "ip_address",
-            placeholder: "123.123.123.123",
-            featured: true,
-            required: true
-          },
-          {
+            readonly: true,
+            disabled: true
+          }, {
             type: "input",
             inputType: "text",
-            label: "Radio Port",
-            model: "port",
-            placeholder: 80,
+            label: "Room Identifier",
+            model: "room_identifier",
+            placeholder: "room",
             featured: true,
             required: true
           },
-          {
-            type: "input",
-            inputType: "text",
-            label: "Radio route",
-            model: "route",
-            placeholder: "/",
-            featured: true,
-            required: true
-          },
-          {
-            type: "input",
-            inputType: "text",
-            label: "Alarm Time",
-            model: "alarm_time",
-            placeholder: "00:00",
-            featured: true,
-            required: true
-          },
-          {
-            type: "checkbox",
-            label: "Re Arm",
-            model: "re_arm",
-            default: false
-          },
-          {
-            type: "select",
-            label: "Alarm Audio Type",
-            model: "audio_type",
-            values: ["Beep", "Radio"],
-            required: true
-          },
-          {
-            type: "select",
-            label: "Alarm Radio channel",
-            model: "alarm_radio_channel",
-            values: ["C-rock", "Jazz", "Aardschok"],
-            required: true
-          },
-          {
-            type: "checkbox",
-            label: "Factory Reset",
-            model: "factory_reset",
-            default: false
-          }
         ]
       },
       formOptions: {
