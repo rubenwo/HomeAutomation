@@ -4,25 +4,26 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.ruben.clientandroid.Api.volley.VolleyCallback;
 import com.ruben.clientandroid.Api.volley.VolleyService;
-import com.ruben.clientandroid.Api.volley.requests.SetLampStateRequest;
 import com.ruben.clientandroid.Models.HueBridge;
 import com.ruben.clientandroid.Models.HueLamp;
 
-import top.defaults.colorpicker.ColorPickerView;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import static com.ruben.clientandroid.MainActivity.BRIDGE_URL;
 import static com.ruben.clientandroid.MainActivity.LAMP_URL;
+
+import top.defaults.colorpicker.ColorPickerView;
 
 public class DetailedHueLampActivity extends AppCompatActivity {
 
@@ -64,17 +65,8 @@ public class DetailedHueLampActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 hueLamp.setOn(isChecked);
-                api.doRequest(new SetLampStateRequest(new VolleyCallback<String>() {
-                    @Override
-                    public void OnResponse(String data) {
-                        //TODO: Do something with the resulting response (is a description from the controller)
-                    }
-
-                    @Override
-                    public void OnError(Error error) {
-                        //TODO: Do something in case of an error.
-                    }
-                }, hueLamp, Contants.API_GATEWAY + "/hue/lamp/" + hueLamp.id));
+//                light.setHue(finalColor);
+                //api.changeLight(bridge, light, request, light.getBrightness(), finalColor, light.getSaturation(), isChecked);
                 lightSeekbar.setEnabled(isChecked);
                 colorPickerView.setEnabled(isChecked);
             }

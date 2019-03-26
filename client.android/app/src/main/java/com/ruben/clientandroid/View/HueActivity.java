@@ -3,6 +3,7 @@ package com.ruben.clientandroid.View;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.ruben.clientandroid.R;
 import com.ruben.clientandroid.Api.volley.VolleyService;
 import com.ruben.clientandroid.Models.Device;
 import com.ruben.clientandroid.Models.HueBridge;

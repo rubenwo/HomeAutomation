@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.ruben.clientandroid.R;
 import com.ruben.clientandroid.Models.Device;
 
 public class SettingsActivity extends AppCompatActivity {
