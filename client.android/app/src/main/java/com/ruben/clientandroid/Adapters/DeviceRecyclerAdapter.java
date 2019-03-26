@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,7 @@ public class DeviceRecyclerAdapter extends RecyclerView.Adapter<DeviceRecyclerAd
     private ArrayList<Device> dataSource;
 
     public DeviceRecyclerAdapter(Context context, ArrayList<Device> dataArgs) {
-        dataSource = dataArgs;
+        this.dataSource = dataArgs;
         this.mContext = context;
     }
 
@@ -57,7 +58,10 @@ public class DeviceRecyclerAdapter extends RecyclerView.Adapter<DeviceRecyclerAd
             type = view.findViewById(R.id.device_type);
             background = view.findViewById(R.id.device_view);
 
-            switch (dataSource.get(getAdapterPosition()).getDevice_type().toLowerCase()) {
+            Log.e("DEVICE", "AdapterPosition: " + dataSource.get(getAdapterPosition()));
+            Device device = dataSource.get(getAdapterPosition());
+
+            switch (device.getDevice_type().toLowerCase()) {
                 case "hue":
                     background.setOnClickListener(v -> {
                         Device i = dataSource.get(getAdapterPosition());

@@ -44,10 +44,13 @@ public class MainActivity extends AppCompatActivity {
         devices = new ArrayList<>();
         rooms = new ArrayList<>();
 
+        addTestDevices();
+
         mRecyclerView = findViewById(R.id.device_recyclerview);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        Log.e("LENGTH: ", "Length of list: " + devices.size());
         mAdapter = new DeviceRecyclerAdapter(getApplicationContext(), devices);
         mRecyclerView.setAdapter(mAdapter);
         
@@ -75,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("MAINACTIVITY_TAG", "OnResponse: " + data.toString());
 
                 devices.clear();
+                addTestDevices();
                 devices.addAll(data);
                 mAdapter.notifyDataSetChanged();
 
@@ -105,5 +109,14 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("MAINACTIVITY_TAG", "OnError: " + error.getMessage());
             }
         }, Contants.API_GATEWAY + "/registry/rooms"));
+    }
+
+    private void addTestDevices() {
+        devices.add(new Device("1", "TestDevice1", "Hue", "Bridge1", "0.0.0.0:80", "1"));
+        devices.add(new Device("2", "TestDevice2", "IR-Controller", "Controller 1", "0.0.0.0:80", "2"));
+        devices.add(new Device("3", "TestDevice3", "Hue", "Bridge2", "1.0.1.0:80", "3"));
+        devices.add(new Device("4", "TestDevice4", "Hue", "Bridge3", "0.0.0.0:80", "4"));
+        devices.add(new Device("5", "TestDevice5", "Hue", "Bridge4", "0.0.0.0:80", "5"));
+        devices.add(new Device("6", "TestDevice6", "Hue", "Bridge5", "0.0.0.0:80", "6"));
     }
 }

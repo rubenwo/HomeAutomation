@@ -12,6 +12,15 @@ public class Device implements Serializable {
     private String ip_address;
     private String room_identifier;
 
+    public Device(String identifier, String name, String device_type, String controller_name, String ip_address, String room_identifier) {
+        this.identifier = identifier;
+        this.name = name;
+        this.device_type = device_type;
+        this.controller_name = controller_name;
+        this.ip_address = ip_address;
+        this.room_identifier = room_identifier;
+    }
+
     public static Device fromJson(String json) {
         return Contants.GSON.fromJson(json, Device.class);
     }

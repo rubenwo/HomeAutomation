@@ -3,6 +3,7 @@ package com.ruben.clientandroid.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
+import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,12 +13,17 @@ import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.ruben.clientandroid.Api.volley.VolleyCallback;
 import com.ruben.clientandroid.Api.volley.VolleyService;
+import com.ruben.clientandroid.Api.volley.requests.SetLampStateRequest;
 import com.ruben.clientandroid.DetailedHueLampActivity;
 import com.ruben.clientandroid.Models.HueBridge;
 import com.ruben.clientandroid.Models.HueLamp;
+import com.ruben.clientandroid.Contants;
 import com.ruben.clientandroid.R;
+
 
 import static com.ruben.clientandroid.MainActivity.BRIDGE_URL;
 import static com.ruben.clientandroid.MainActivity.LAMP_URL;
@@ -55,11 +61,21 @@ public class HueRecyclerAdapter extends RecyclerView.Adapter<HueRecyclerAdapter.
         viewHolder.seekBar.setThumbOffset(0);
         viewHolder.seekBar.setProgress(lamp.brightness);
 
+
         viewHolder.state.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                //api.doRequest();
-                viewHolder.state.setChecked(isChecked);
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                api.doRequest(new SetLampStateRequest(new VolleyCallback<String>() {
+                    @Override
+                    public void OnResponse(String data) {
+                        Toast.makeText(context, data, Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void OnError(Error error) {
+                        Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }, lamp, Contants.API_GATEWAY + "/hue/lamp/" + lamp.getId()));
             }
         });
 
