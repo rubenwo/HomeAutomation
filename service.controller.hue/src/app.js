@@ -25,7 +25,7 @@ app.get('/hue', (req, res) => {
 
 //Pair function to pair the lamps to the application
 let getUser = app.get('/hue/pair', (req, res) => {
-    
+
     let body = {
         "devicetype": "NodeJS-Controller"
     }
@@ -37,7 +37,7 @@ let getUser = app.get('/hue/pair', (req, res) => {
             description: ''
         }
 
-        if(body[0].error) {
+        if (body[0].error) {
             response.isValid = false
             response.description = body[0].error.description
             res.status(400).json(response)
@@ -46,7 +46,7 @@ let getUser = app.get('/hue/pair', (req, res) => {
             response.isValid = true
             response.description = token;
             res.status(200).json(response);
-            
+
         }
     })
 })
@@ -75,12 +75,6 @@ app.get('/hue/lamps', (req, res) => { //endpoint
             }
             res.send(lights)
             console.log(lights);
-            let keys = Object.keys(response.description)
-
-                group_ids.length = 0;
-                keys.forEach(element => {
-                    group_ids.push(element);
-                });
         }
     )
 })
@@ -95,17 +89,17 @@ app.get('/hue/lamp/:identifier', (req, res) => {
         description: ''
     }
 
-    if(contains(lamp_ids, id)) {
+    if (contains(lamp_ids, id)) {
         conn.sendRequest(
             URL,
             "GET",
             null,
             (err, resp, body) => {
-    
+
                 let json = JSON.parse(body);
-    
+
                 // Check of het een array is dan error anders is het een object
-                if(json[0]) {
+                if (json[0]) {
                     response.isValid = false
                     response.description = json[0].error.description
                     status(400).json(response);
@@ -124,7 +118,7 @@ app.get('/hue/lamp/:identifier', (req, res) => {
         });
         res.sendStatus(404); //Not found
     }
-  })
+})
 
 // Change lamp properties. Identifier identifies a lamp.
 
@@ -135,7 +129,7 @@ app.get('/hue/lamp/:identifier', (req, res) => {
 // Sat: stands for the saturaion of the light; value must be between 0 and 254 (int)
 app.put('/hue/lamp/:identifier', (req, res) => {
     let id = req.params['identifier']
-    let URL = url + '/' + token + "/lights/" + id + "/state/" 
+    let URL = url + '/' + token + "/lights/" + id + "/state/"
 
     let on = req.body["on"]     //true or false
     let bri = req.body['bri']
@@ -154,14 +148,14 @@ app.put('/hue/lamp/:identifier', (req, res) => {
         description: ''
     }
 
-    if(contains(lamp_ids, id)) {
+    if (contains(lamp_ids, id)) {
         conn.sendRequest(
             URL,
             "PUT",
             body,
             (err, resp, body) => {
-        
-                if(body[0].error) {
+
+                if (body[0].error) {
                     response.isValid = false
                     response.description = body[0].error.description
                     res.statusCode(400).json(response);
@@ -189,8 +183,8 @@ app.put('/hue/lamp/:identifier', (req, res) => {
 //=============================================
 
 //Get all groups
-app.get('/hue/groups', (req ,res) => {
-    let URL = url + '/' + token +  '/groups'
+app.get('/hue/groups', (req, res) => {
+    let URL = url + '/' + token + '/groups'
 
     let response = {
         isValid: false,
@@ -206,7 +200,7 @@ app.get('/hue/groups', (req ,res) => {
             let json = JSON.parse(body);
 
             //Check response, check if empty, if any schedule's exist
-            if(json[0]) {
+            if (json[0]) {
                 response.isValid = false
                 response.description = json[0].error.description
                 res.status(400).json(response)
@@ -281,27 +275,27 @@ app.get('/hue/groups', (req ,res) => {
 // })
 
 //Get group attributes
-app.get('/hue/groups/:identifier', (req ,res) => {
+app.get('/hue/groups/:identifier', (req, res) => {
     let id = req.params['identifier']
-    let URL = url + '/' + token +  '/groups/' + id
+    let URL = url + '/' + token + '/groups/' + id
 
     let response = {
         isValid: false,
         description: ''
     }
 
-    if(contains(group_ids, id)) {
+    if (contains(group_ids, id)) {
         console.log("Group ID exists!");
         conn.sendRequest(
             URL,
             "GET",
             null,
             (err, resp, body) => {
-    
+
                 let json = JSON.parse(body);
-    
+
                 //Check response, check if empty, if any schedule with this <ID> exists
-                if(json[0]) {
+                if (json[0]) {
                     response.isValid = false
                     response.description = json[0].error.description
                     res.status(400).json(response)
@@ -310,7 +304,7 @@ app.get('/hue/groups/:identifier', (req ,res) => {
                     response.isValid = true
                     response.description = json
                     res.status(200).json(response)
-                    
+
                     console.log("Json response of: GET /hue/groups/<identifier>: \r\n", response.description)
                 }
             }
@@ -337,16 +331,16 @@ app.get('/hue/groups/:identifier', (req ,res) => {
 
 //Delete group:
 //Deletes a specific group from the bridge
-app.delete('/hue/groups/:identifier', (req ,res) => {
+app.delete('/hue/groups/:identifier', (req, res) => {
     let id = req.params['identifier']
-    let URL = url + '/' + token +  '/groups/' + id
+    let URL = url + '/' + token + '/groups/' + id
 
     let response = {
         isValid: false,
         description: ''
     }
 
-    if(contains(group_ids, id)) {
+    if (contains(group_ids, id)) {
         console.log("Group ID exists!");
         conn.sendRequest(
             URL,
@@ -354,9 +348,9 @@ app.delete('/hue/groups/:identifier', (req ,res) => {
             null,
             (err, resp, body) => {
                 let json = JSON.parse(body);
-    
+
                 //Check response, check if empty, if any schedule with this <ID> exists
-                if(json[0]) {
+                if (json[0]) {
                     response.isValid = false
                     response.description = json[0].error.description
                     res.status(400).json(response)
@@ -385,8 +379,8 @@ app.delete('/hue/groups/:identifier', (req ,res) => {
 //=============================================
 
 //Get all schedules of a Hue Bridge
-app.get('/hue/schedules', (req ,res) => {
-    let URL = url + '/' + token +  '/schedules'
+app.get('/hue/schedules', (req, res) => {
+    let URL = url + '/' + token + '/schedules'
 
     let response = {
         isValid: false,
@@ -402,7 +396,7 @@ app.get('/hue/schedules', (req ,res) => {
             let json = JSON.parse(body);
 
             //Check response, check if empty, if any schedule's exist
-            if(json[0]) {
+            if (json[0]) {
                 response.isValid = false
                 response.description = json[0].error.description
                 res.status(400).json(response)
@@ -421,11 +415,11 @@ app.get('/hue/schedules', (req ,res) => {
                 });
 
                 var index = 0
-                for(index; index < keys.length; index++) {
+                for (index; index < keys.length; index++) {
                     let object_keys = Object.keys(keys[index])
                     keys.forEach(element => {
                         var obj = util.
-                        console.log(element.params);
+                            console.log(element.params);
                     });
                     // console.log("Attributes of object ID: ", index);
                     // for(index_2; index_2 < object_keys.length; index_2++) {
@@ -441,27 +435,27 @@ app.get('/hue/schedules', (req ,res) => {
 
 //Parameters:
 //id: to obtain all the available id's use method: /hue/schedules.
-app.get('/hue/schedules/:identifier', (req ,res) => {
+app.get('/hue/schedules/:identifier', (req, res) => {
     let id = req.params['identifier']
-    let URL = url + '/' + token +  '/schedules/' + id
+    let URL = url + '/' + token + '/schedules/' + id
 
     let response = {
         isValid: false,
         description: ''
     }
 
-    if(contains(schedule_ids, id)) {
+    if (contains(schedule_ids, id)) {
         console.log("Schedule ID exists!");
         conn.sendRequest(
             URL,
             "GET",
             null,
             (err, resp, body) => {
-    
+
                 let json = JSON.parse(body);
-    
+
                 //Check response, check if empty, if any schedule with this <ID> exists
-                if(json[0]) {
+                if (json[0]) {
                     response.isValid = false
                     response.description = json[0].error.description
                     res.status(400).json(response)
@@ -469,7 +463,7 @@ app.get('/hue/schedules/:identifier', (req ,res) => {
                     response.isValid = true
                     response.description = json
                     res.status(200).json(response)
-    
+
                     console.log("Json response of: GET /hue/schedules/<identifier>: \r\n", response.description)
                 }
             }
@@ -496,9 +490,9 @@ app.get('/hue/schedules/:identifier', (req ,res) => {
 //status: status of the schedule. (string)
 //autodelete: if schedule gets removed automatically when the schedule is expired. If true, it will get removed
 //              if false, the schedule gets disabled.
-app.put('/hue/schedules/:identifier', (req ,res) => {
+app.put('/hue/schedules/:identifier', (req, res) => {
     let id = req.params['identifier']
-    let URL = url + '/' + token +  '/schedules/' + id
+    let URL = url + '/' + token + '/schedules/' + id
 
     let name = req.body["name"]     //true or false
     let description = req.body['description']
@@ -521,20 +515,20 @@ app.put('/hue/schedules/:identifier', (req ,res) => {
         description: ''
     }
 
-    if(contains(schedule_ids, id)) {
+    if (contains(schedule_ids, id)) {
         console.log("Schedule ID exists!");
         conn.sendRequest(URL, "PUT", body, (err, resp, body) => {
-                if(body[0].error) {
-                    response.isValid = false
-                    response.description = body[0].error.description
-                    res.status(400).json(response);
-                } else {
-                    response.isValid = true
-                    response.description = body[0].success
-                    res.status(200).json(response);
-                }
-                console.log("Json response of: SET /hue/schedules/<identifier>: \r\n", response.description)
+            if (body[0].error) {
+                response.isValid = false
+                response.description = body[0].error.description
+                res.status(400).json(response);
+            } else {
+                response.isValid = true
+                response.description = body[0].success
+                res.status(200).json(response);
             }
+            console.log("Json response of: SET /hue/schedules/<identifier>: \r\n", response.description)
+        }
         )
     } else {
         console.log("ID: ", id, "does not exist\r\n")
@@ -552,16 +546,16 @@ app.put('/hue/schedules/:identifier', (req ,res) => {
 
 //Parameters:
 //id: to obtain all the available id's use method: /hue/schedules.
-app.delete('/hue/schedules/:identifier', (req ,res) => {
+app.delete('/hue/schedules/:identifier', (req, res) => {
     let id = req.params['identifier']
-    let URL = url + '/' + token +  '/schedules/' + id
+    let URL = url + '/' + token + '/schedules/' + id
 
     let response = {
         isValid: false,
         description: ''
     }
 
-    if(contains(schedule_ids, id)) {
+    if (contains(schedule_ids, id)) {
         console.log("Schedule ID exists!");
         conn.sendRequest(
             URL,
@@ -569,9 +563,9 @@ app.delete('/hue/schedules/:identifier', (req ,res) => {
             null,
             (err, resp, body) => {
                 let json = JSON.parse(body);
-    
+
                 //Check response, check if empty, if any schedule with this <ID> exists
-                if(json[0]) {
+                if (json[0]) {
                     response.isValid = false
                     response.description = json[0].error.description
                     res.status(400).json(response)

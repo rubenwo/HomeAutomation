@@ -7,22 +7,16 @@ import com.ruben.clientandroid.Api.volley.VolleyService;
 import com.ruben.clientandroid.Models.Device;
 import com.ruben.clientandroid.Models.HueBridge;
 import com.ruben.clientandroid.Models.HueController;
-<<<<<<< Updated upstream
-=======
 import com.ruben.clientandroid.Models.HueLamp;
->>>>>>> Stashed changes
-import com.ruben.clientandroid.R;
 
 import java.util.ArrayList;
 
 public class HueActivity extends AppCompatActivity {
-    private ArrayList<Lamp> lamps;
-    private VolleyService volleyService;
+    private ArrayList<HueLamp> lamps;
 
     public HueBridge hueBridge;
     public VolleyService volleyService;
     public ArrayList<HueLamp> hueLamps;
-    
 
 
     @Override
@@ -42,10 +36,10 @@ public class HueActivity extends AppCompatActivity {
 
             @Override
             public void OnError(Error error) {
-
+                //TODO: Do something in case of an error.
             }
         }, Contants.API_GATEWAY + "/hue/lamps"));*/
         // Test Data
-        lamps.add(new Lamp("1", "Lamp 1", false, 255, 255, 255));
+        lamps.add(new HueLamp(1, "Lamp 1", false, 255, 255, 255, "hs", true));
     }
 }
