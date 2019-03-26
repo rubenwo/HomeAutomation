@@ -13,7 +13,6 @@ const bluebird = require('bluebird')
 bluebird.promisifyAll(redis);
 
 
-
 app.use(express.json())
 app.use(cors())
 
@@ -77,7 +76,7 @@ setTimeout(() => {
         client.quit();
     })
     initFromDatabase();
-   
+
 }, 10000)
 
 //initFromFiles("rooms")
@@ -170,7 +169,7 @@ app.post('/registry/devices', (req, res) => {
         //fs.writeFileSync('./devices.json', JSON.stringify(devices), 'utf8')
         writeToDatabase("devices", devices)
 
-       //res.setHeader("201", "Create device")
+        //res.setHeader("201", "Create device")
         res.status(201).json(devices)
     } else {
         res.sendStatus(422)
@@ -188,7 +187,7 @@ app.get('/registry/devices/:identifier', (req, res) => {
     }
     for (let i = 0; i < devices.length; i++) {
         if (devices[i].identifier === id) {
-          //  res.setHeader(200)
+            //  res.setHeader(200)
             res.status(200).json(devices[i])
             return
         }
@@ -243,7 +242,7 @@ app.post('/registry/rooms', (req, res) => {
         rooms.push(json)
         //fs.writeFileSync('rooms.json', JSON.stringify(rooms), 'utf8')
         writeToDatabase("rooms", rooms)
-       // res.setHeader("201", "Created room")
+        // res.setHeader("201", "Created room")
         res.status(201).json(rooms)
     } else {
         res.sendStatus(422)
@@ -261,7 +260,7 @@ app.get('/registry/rooms/:identifier', (req, res) => {
     }
     for (let i = 0; i < rooms.length; i++) {
         if (rooms[i].identifier === id) {
-           // res.setHeader(200)
+            // res.setHeader(200)
             res.status(200).json(rooms[i])
             return
         }

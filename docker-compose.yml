@@ -62,6 +62,18 @@ services:
     env_file:
       - ./.env
 
+  service.controller.ir:
+    build:
+      dockerfile: ./service.controller.ir/Dockerfile
+      context: .
+    image: home-automation-ir-controller-service
+    restart: on-failure
+    volumes:
+      - ./service.controller.ir:/usr/src/app
+      - /usr/src/app/node_modules
+    env_file:
+      - ./.env
+
   service.api-gateway:
     build:
       dockerfile: ./service.api-gateway/Dockerfile
