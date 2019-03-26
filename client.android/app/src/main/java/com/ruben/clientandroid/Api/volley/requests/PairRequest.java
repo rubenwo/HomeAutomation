@@ -18,7 +18,7 @@ public class PairRequest implements VolleyRequest {
     private VolleyCallback<ArrayList<Device>> callback;
     private String url;
 
-    public PairRequest(VolleyCallback, String url)
+    public PairRequest(VolleyCallback callback, String url)
     {
         this.callback = callback;
         this.url = url;

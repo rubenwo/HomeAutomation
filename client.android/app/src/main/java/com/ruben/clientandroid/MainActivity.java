@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         devices = new ArrayList<>();
         rooms = new ArrayList<>();
 
-        addTestDevices();
+//        addTestDevices();
 
         mRecyclerView = findViewById(R.id.device_recyclerview);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
