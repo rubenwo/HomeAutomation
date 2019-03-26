@@ -1,7 +1,7 @@
 {
   "name": "service.controller.ir",
   "version": "1.0.0",
-  "description": "## Usage",
+  "description": "**Definition**",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,7 +11,6 @@
   "dependencies": {
     "cors": "^2.8.5",
     "delay": "^4.1.0",
-    "express": "^4.16.4",
-    "rpi-gpio": "^2.1.3"
+    "express": "^4.16.4"
   }
 }
