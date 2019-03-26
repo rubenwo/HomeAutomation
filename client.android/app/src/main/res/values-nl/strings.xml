@@ -9,6 +9,7 @@
     <string name="time">Time:</string>
     <string name="light">Lightbulb:</string>
     <string name="schedules">Schedules:</string>
+    <string name="hueactivitytitle">Devices:</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

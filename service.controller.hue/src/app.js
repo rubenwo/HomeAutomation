@@ -15,8 +15,6 @@ app.use(express.json());
 
 //To do's:
 
-
-
 // Documentation endpoint
 app.get('/hue', (req, res) => {
     res.sendFile(path.join(__dirname + '/index.html'));

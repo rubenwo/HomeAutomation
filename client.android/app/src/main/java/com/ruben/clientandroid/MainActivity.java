@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("MAINACTIVITY_TAG", "OnResponse: " + data.toString());
 
                 devices.clear();
-                addTestDevices();
+                //addTestDevices();
                 devices.addAll(data);
                 mAdapter.notifyDataSetChanged();
 

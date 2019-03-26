@@ -1,5 +1,7 @@
 package com.ruben.clientandroid.Api.volley.requests;
 
+import android.util.Log;
+
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
@@ -35,22 +37,24 @@ public class GetLampsRequest implements VolleyRequest {
                 null,
                 response -> {
                     try {
+                        Log.e("TRY", "TRYTRY");
                         ArrayList<HueLamp> lamps = new ArrayList<>();
                         JSONArray array = response.getJSONArray("lights");
 
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject light = array.getJSONObject(i);
                             JSONObject state = light.getJSONObject("state");
-                            lamps.add(new HueLamp(
-                                    Integer.valueOf(light.getString("id")),
+
+                            HueLamp lamp = new HueLamp(Integer.valueOf(light.getString("id")),
                                     light.getString("name"),
                                     state.getBoolean("on"),
                                     state.getInt("bri"),
                                     state.getInt("hue"),
                                     state.getInt("sat"),
                                     state.getString("colormode"),
-                                    state.getBoolean("reachable")
-                            ));
+                                    state.getBoolean("reachable"));
+                            Log.e("NEW LAMP:", "Lamp: " + lamp.toString());
+                            lamps.add(lamp);
                         }
 
                         this.callback.OnResponse(lamps);

@@ -39,7 +39,7 @@ public class DeviceRecyclerAdapter extends RecyclerView.Adapter<DeviceRecyclerAd
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
         Device device = dataSource.get(i);
         myViewHolder.title.setText(device.getName());
-        myViewHolder.type.setText(device.getDevice_type());
+        myViewHolder.type.setText("Type: " + device.getDevice_type());
     }
 
     @Override

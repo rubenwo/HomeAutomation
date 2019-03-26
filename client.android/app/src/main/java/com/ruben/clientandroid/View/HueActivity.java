@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.ruben.clientandroid.Contants;
 import com.ruben.clientandroid.Adapters.HueRecyclerAdapter;
@@ -25,6 +26,7 @@ public class HueActivity extends AppCompatActivity {
     public HueBridge hueBridge;
     public VolleyService volleyService;
     public ArrayList<HueLamp> hueLamps;
+    private TextView title;
     private RecyclerView mRecyclerview;
     private RecyclerView.LayoutManager mLayoutManager;
     private HueRecyclerAdapter hueRecyclerAdapter;
@@ -34,7 +36,10 @@ public class HueActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hue);
+        title = findViewById(R.id.activity_hue_title);
+        title.setText("Devices:");
         hueLamps = new ArrayList<>();
+
         HueController controller = new HueController((Device) getIntent().getSerializableExtra("DEVICE"));
         // Test Data
         hueLamps.add(new HueLamp(1, "Lamp 1", false, 255, 255, 255, "hs", true));
@@ -49,12 +54,15 @@ public class HueActivity extends AppCompatActivity {
         hueRecyclerAdapter = new HueRecyclerAdapter(this, hueLamps, hueBridge);
         mRecyclerview.setAdapter(hueRecyclerAdapter);
 
+
         //linear layout
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerview.setLayoutManager(mLayoutManager);
 
         //volley for API
         volleyService = VolleyService.getInstance(null);
+
+
 
         volleyService.doRequest(new GetLampsRequest(new VolleyCallback<ArrayList<HueLamp>>() {
             @Override
