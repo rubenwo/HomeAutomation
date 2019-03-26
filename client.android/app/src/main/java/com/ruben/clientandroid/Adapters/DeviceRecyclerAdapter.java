@@ -28,8 +28,9 @@ public class DeviceRecyclerAdapter extends RecyclerView.Adapter<DeviceRecyclerAd
         this.mContext = context;
     }
 
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.device_item, parent, false);
         return new MyViewHolder(view, mContext);
     }
@@ -58,29 +59,27 @@ public class DeviceRecyclerAdapter extends RecyclerView.Adapter<DeviceRecyclerAd
             type = view.findViewById(R.id.device_type);
             background = view.findViewById(R.id.device_view);
 
-            Log.e("DEVICE", "AdapterPosition: " + dataSource.get(getAdapterPosition()));
-            Device device = dataSource.get(getAdapterPosition());
+            background.setOnClickListener(view1 -> {
+                Log.e("DEVICE", "AdapterPosition: " + dataSource.get(getAdapterPosition()));
+                Device device = dataSource.get(getAdapterPosition());
+                Intent intent;
+                switch (device.getDevice_type().toLowerCase()) {
+                    case "hue":
 
-            switch (device.getDevice_type().toLowerCase()) {
-                case "hue":
-                    background.setOnClickListener(v -> {
-                        Device i = dataSource.get(getAdapterPosition());
-                        Intent intent = new Intent(context, HueActivity.class);
-                        intent.putExtra("DEVICE", i);
+                        intent = new Intent(context, HueActivity.class);
+                        intent.putExtra("DEVICE", device);
                         mContext.startActivity(intent);
-                    });
-                    break;
-                case "ir-controller":
-                    background.setOnClickListener(v -> {
-                        Device i = dataSource.get(getAdapterPosition());
-                        Intent intent = new Intent(context, IRActivity.class);
-                        intent.putExtra("DEVICE", i);
+                        break;
+                    case "ir-controller":
+
+                        intent = new Intent(context, IRActivity.class);
+                        intent.putExtra("DEVICE", device);
                         mContext.startActivity(intent);
-                    });
-                    break;
-                default:
-                    break;
-            }
+                        break;
+                    default:
+                        break;
+                }
+            });
         }
     }
 }

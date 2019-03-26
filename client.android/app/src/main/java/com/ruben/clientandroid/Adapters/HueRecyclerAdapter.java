@@ -38,8 +38,8 @@ public class HueRecyclerAdapter extends RecyclerView.Adapter<HueRecyclerAdapter.
     private HueBridge bridge;
     public VolleyService api;
 
-    public HueRecyclerAdapter(Context context, ArrayList<HueLamp> dataArgs, HueBridge bridge) {
-        hueLamps = dataArgs;
+    public HueRecyclerAdapter(Context context, ArrayList<HueLamp> lamps, HueBridge bridge) {
+        hueLamps = lamps;
         this.context = context;
         this.bridge = bridge;
     }
@@ -68,12 +68,12 @@ public class HueRecyclerAdapter extends RecyclerView.Adapter<HueRecyclerAdapter.
                 api.doRequest(new SetLampStateRequest(new VolleyCallback<String>() {
                     @Override
                     public void OnResponse(String data) {
-                        Toast.makeText(context, data, Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Success: " + data, Toast.LENGTH_LONG).show();
                     }
 
                     @Override
                     public void OnError(Error error) {
-                        Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Error:" + error.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }, lamp, Contants.API_GATEWAY + "/hue/lamp/" + lamp.getId()));
             }
