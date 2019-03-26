@@ -17,7 +17,7 @@ app.use('/hue*', proxy({
 
 // Register path to infrared controller service.
 //TODO: change target
-app.use('/ir_controller', proxy({
+app.use('/ir_controller*', proxy({
     target: 'http://service.controller.ir',
     changeOrigin: true
 }))
