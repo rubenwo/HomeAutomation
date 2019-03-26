@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -53,6 +54,15 @@ public class HueRecyclerAdapter extends RecyclerView.Adapter<HueRecyclerAdapter.
         viewHolder.seekBar.setMax(254);
         viewHolder.seekBar.setThumbOffset(0);
         viewHolder.seekBar.setProgress(lamp.brightness);
+
+        viewHolder.state.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                //api.doRequest();
+                viewHolder.state.setChecked(isChecked);
+            }
+        });
+
 
         api = VolleyService.getInstance(null); //Enter Application here
     }

@@ -8,7 +8,6 @@ import com.ruben.clientandroid.Models.Device;
 import com.ruben.clientandroid.Models.HueBridge;
 import com.ruben.clientandroid.Models.HueController;
 <<<<<<< Updated upstream
-import com.ruben.clientandroid.Models.Lamp;
 =======
 import com.ruben.clientandroid.Models.HueLamp;
 >>>>>>> Stashed changes

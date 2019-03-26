@@ -44,15 +44,13 @@ public class MainActivity extends AppCompatActivity {
         devices = new ArrayList<>();
         rooms = new ArrayList<>();
 
-
         mRecyclerView = findViewById(R.id.device_recyclerview);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         mAdapter = new DeviceRecyclerAdapter(getApplicationContext(), devices);
         mRecyclerView.setAdapter(mAdapter);
-
-
+        
         volleyService = VolleyService.getInstance(getApplication());
         notificationService = NotificationService.getInstance(getApplication(), this);
         try {

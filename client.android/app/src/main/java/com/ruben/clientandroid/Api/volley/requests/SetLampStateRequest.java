@@ -9,11 +9,11 @@ import com.ruben.clientandroid.Models.HueLamp;
 
 import java.util.ArrayList;
 
-public class GetLampsRequest implements VolleyRequest {
-    private VolleyCallback<ArrayList<HueLamp>> callback;
+public class SetLampStateRequest implements VolleyRequest {
+    private VolleyCallback<HueLamp> callback;
     private String url;
 
-    public GetLampsRequest(VolleyCallback<ArrayList<HueLamp>> callback, String url) {
+    public SetLampStateRequest(VolleyCallback<HueLamp> callback, String url) {
         this.callback = callback;
         this.url = url;
     }
@@ -26,9 +26,9 @@ public class GetLampsRequest implements VolleyRequest {
     @Override
     public JsonRequest DoRequest() {
         return new JsonObjectRequest(
-                Request.Method.GET,
+                Request.Method.PUT,
                 this.url,
-                null,
+                null, //hier moet een body komen?
                 response -> {
 
                 },
