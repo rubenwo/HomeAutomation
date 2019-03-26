@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const hue_connector = require('./hue_connector.js')
 
-let url = "http://127.0.0.1/api"
+let url = "http://127.0.0.1/api" //TODO: change url to get it from client
 let token = "" //<username>
 
 var lamp_ids = []
@@ -44,7 +44,6 @@ let getUser = app.get('/hue/pair', (req, res) => {
             response.isValid = true
             response.description = token;
             res.status(200).json(response);
-
         }
     })
 })
@@ -71,7 +70,7 @@ app.get('/hue/lamps', (req, res) => { //endpoint
                 obj.id = key
                 lights.lights.push(obj);
             }
-            res.send(lights)
+            res.status(200).json(lights)
             console.log(lights);
         }
     )
@@ -205,7 +204,6 @@ app.get('/hue/groups', (req, res) => {
             } else {
                 response.isValid = true
                 response.description = json
-                res.status(200).json(response)
 
                 console.log("Json response of: /hue/groups: \r\n", response.description)
 
@@ -215,6 +213,8 @@ app.get('/hue/groups', (req, res) => {
                 keys.forEach(element => {
                     group_ids.push(element);
                 });
+
+                res.status(200).json(response)
             }
         }
     )
@@ -297,13 +297,12 @@ app.get('/hue/groups/:identifier', (req, res) => {
                     response.isValid = false
                     response.description = json[0].error.description
                     res.status(400).json(response)
-                    res.sendStatus()
                 } else {
                     response.isValid = true
                     response.description = json
-                    res.status(200).json(response)
 
                     console.log("Json response of: GET /hue/groups/<identifier>: \r\n", response.description)
+                    res.status(200).json(response)
                 }
             }
         )
@@ -401,7 +400,6 @@ app.get('/hue/schedules', (req, res) => {
             } else {
                 response.isValid = true
                 response.description = json
-                res.status(200).json(response)
 
                 console.log("Json response of: /hue/schedules: \r\n", response.description)
 
@@ -424,6 +422,7 @@ app.get('/hue/schedules', (req, res) => {
                     //     console.log("")
                     // }
                 }
+                res.status(200).json(response)
             }
         }
     )
@@ -534,7 +533,7 @@ app.put('/hue/schedules/:identifier', (req, res) => {
         schedule_ids.forEach(element => {
             console.log(element)
         });
-        sendStatus(404);
+        res.sendStatus(404);
     }
 })
 
@@ -570,9 +569,9 @@ app.delete('/hue/schedules/:identifier', (req, res) => {
                 } else {
                     response.isValid = true
                     response.description = json
-                    res.status(204).json(response)
                     console.log("Json response of: DELETE /hue/schedules/<identifier>: \r\n", response.description)
                     console.log(json.success);
+                    res.status(204).json(response)
                 }
             }
         )
@@ -582,7 +581,7 @@ app.delete('/hue/schedules/:identifier', (req, res) => {
         schedule_ids.forEach(element => {
             console.log(element)
         });
-        sendStatus(404);
+        res.sendStatus(404);
     }
 })
 
@@ -603,6 +602,6 @@ function contains(arr, valueOrObject) {
 
 
 //Opens a listen connection on port 8000
-app.listen(8000, () => {
-    console.log("Hue Service listening on port 8000")
+app.listen(80, () => {
+    console.log("Hue Service listening on port 80")
 })
