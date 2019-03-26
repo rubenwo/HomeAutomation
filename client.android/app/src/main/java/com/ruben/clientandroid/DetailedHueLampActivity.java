@@ -45,12 +45,10 @@ public class DetailedHueLampActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed_hue_lamp);
 
-        request = this;
-
         Intent intent = getIntent();
         hueLamp = intent.getParcelableExtra(LAMP_URL);
         hueBridge = intent.getParcelableExtra(BRIDGE_URL);
-        api = VolleyHelper.getInstance(getApplicationContext());
+        api = VolleyService.getInstance(null);
         bindComponents();
 
         int lightcolor = hueLamp.getHue();
@@ -163,24 +161,9 @@ public class DetailedHueLampActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestObjectAvailible(JSONObject response, Response responsetype) {
-
-    }
-
-    @Override
-    public void onRequestArrayAvailible(JSONArray response, Response responsetype) {
-
-    }
-
-    @Override
-    public void onRequestError(Error error) {
-
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
-        request = this;
+        //request = this;
 
         Intent intent = getIntent();
         hueLamp = intent.getParcelableExtra(LAMP_URL);
@@ -222,44 +205,3 @@ public class DetailedHueLampActivity extends AppCompatActivity {
         return (red + "," + green + "," + blue);
     }
 }
-
-
-        import android.content.Intent;
-        import android.graphics.Color;
-        import android.graphics.drawable.ColorDrawable;
-        import android.os.Build;
-        import android.os.Parcelable;
-        import android.support.v7.app.ActionBar;
-        import android.support.v7.app.AppCompatActivity;
-        import android.os.Bundle;
-        import android.util.Log;
-        import android.view.View;
-        import android.widget.Button;
-        import android.widget.CompoundButton;
-        import android.widget.SeekBar;
-        import android.widget.Switch;
-        import android.widget.TextView;
-
-        import org.json.JSONArray;
-        import org.json.JSONObject;
-
-        import nl.ralphrouwen.hue.Helper.RequestListener;
-        import nl.ralphrouwen.hue.Helper.VolleyHelper;
-        import nl.ralphrouwen.hue.Models.Bridge;
-        import nl.ralphrouwen.hue.Models.Light;
-        import nl.ralphrouwen.hue.Models.Response;
-        import nl.ralphrouwen.hue.R;
-        import top.defaults.colorpicker.ColorPickerView;
-
-        import static nl.ralphrouwen.hue.Activitys.MainActivity.BRIDGE_URL;
-        import static nl.ralphrouwen.hue.Activitys.MainActivity.LIGHT_URL;
-
-public class LightDetailedActivity extends AppCompatActivity implements RequestListener {
-
-
-
-
-
-
-}
-
