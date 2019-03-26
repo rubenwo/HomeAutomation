@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".View.IRActivity"></activity>
+        <activity android:name=".DetailedHueLampActivity"></activity>
+        <activity android:name=".View.IRActivity" />
         <activity android:name=".View.HueActivity" />
         <activity android:name=".View.SettingsActivity" />
         <activity android:name=".MainActivity">

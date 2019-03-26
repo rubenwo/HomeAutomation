@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.ruben.clientandroid.Api.volley.VolleyService;
+import com.ruben.clientandroid.DetailedHueLampActivity;
 import com.ruben.clientandroid.Models.HueBridge;
 import com.ruben.clientandroid.Models.HueLamp;
 import com.ruben.clientandroid.R;
@@ -54,7 +54,7 @@ public class HueRecyclerAdapter extends RecyclerView.Adapter<HueRecyclerAdapter.
         viewHolder.seekBar.setThumbOffset(0);
         viewHolder.seekBar.setProgress(lamp.brightness);
 
-        //api = VolleyService.getInstance(); //Enter Application here
+        api = VolleyService.getInstance(null); //Enter Application here
     }
 
     @Override
@@ -86,12 +86,13 @@ public class HueRecyclerAdapter extends RecyclerView.Adapter<HueRecyclerAdapter.
 
             view.setOnClickListener((View v) -> {
                 HueLamp lamp = hueLamps.get(getAdapterPosition());
-                //Intent intent = new Intent(context, ); //Enter DetailedActivity.class here
+                Intent intent = new Intent(context, DetailedHueLampActivity.class); //Enter DetailedActivity.class here
                 intent.putExtra(BRIDGE_URL, (Parcelable) bridge);
                 intent.putExtra(LAMP_URL, (Parcelable) lamp);
+
+                context.startActivity(intent);
             });
 
-            context.startActivity(intent);
         }
     }
 }
