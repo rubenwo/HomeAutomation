@@ -5,8 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.ruben.clientandroid.Api.volley.VolleyService;
 import com.ruben.clientandroid.Models.Device;
+import com.ruben.clientandroid.Models.HueBridge;
 import com.ruben.clientandroid.Models.HueController;
+<<<<<<< Updated upstream
 import com.ruben.clientandroid.Models.Lamp;
+=======
+import com.ruben.clientandroid.Models.HueLamp;
+>>>>>>> Stashed changes
 import com.ruben.clientandroid.R;
 
 import java.util.ArrayList;
@@ -14,6 +19,12 @@ import java.util.ArrayList;
 public class HueActivity extends AppCompatActivity {
     private ArrayList<Lamp> lamps;
     private VolleyService volleyService;
+
+    public HueBridge hueBridge;
+    public VolleyService volleyService;
+    public ArrayList<HueLamp> hueLamps;
+    
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

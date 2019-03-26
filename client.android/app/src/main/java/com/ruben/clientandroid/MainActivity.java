@@ -13,6 +13,7 @@ import com.ruben.clientandroid.Api.volley.VolleyService;
 import com.ruben.clientandroid.Api.volley.requests.GetDevicesRequest;
 import com.ruben.clientandroid.Api.volley.requests.GetRoomsRequest;
 import com.ruben.clientandroid.Models.Device;
+import com.ruben.clientandroid.Models.HueBridge;
 import com.ruben.clientandroid.Models.Room;
 import com.ruben.clientandroid.Services.NotificationService;
 
@@ -31,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<Device> devices;
     private ArrayList<Room> rooms;
+
+    private ArrayList<HueBridge> bridges;
+    public static final String BRIDGE_URL = "bridgeURL";
+    public static final String LAMP_URL = "lampURL";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

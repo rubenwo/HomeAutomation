@@ -19,9 +19,7 @@ import java.util.ArrayList;
 
 public class DeviceRecyclerAdapter extends RecyclerView.Adapter<DeviceRecyclerAdapter.MyViewHolder> implements Serializable {
 
-
     private Context mContext;
-
     private ArrayList<Device> dataSource;
 
     public DeviceRecyclerAdapter(Context context, ArrayList<Device> dataArgs) {
@@ -79,9 +77,6 @@ public class DeviceRecyclerAdapter extends RecyclerView.Adapter<DeviceRecyclerAd
                 default:
                     break;
             }
-
-
         }
-
     }
 }
