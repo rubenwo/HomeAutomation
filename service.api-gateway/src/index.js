@@ -15,6 +15,13 @@ app.use('/hue*', proxy({
     changeOrigin: true
 }))
 
+// Register path to infrared controller service.
+//TODO: change target
+app.use('/ir_controller', proxy({
+    target: 'http://0.0.0.0',
+    changeOrigin: true
+}))
+
 // Register path to event-bus service (websocket)
 const wsProxy = proxy('ws://service.event-bus/event-bus/sub', {
     changeOrigin: true
@@ -33,7 +40,8 @@ app.all('/*', (req, res, next) => {
     web_proxy(req, res, next)
 })
 
+app.on('upgrade', wsProxy.upgrade)
+
 app.listen(80, () => {
     console.log('Started api-gateway service on port 80...')
 })
-app.on('upgrade', wsProxy.upgrade)

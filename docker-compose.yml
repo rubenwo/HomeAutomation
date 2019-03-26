@@ -6,6 +6,7 @@ services:
       dockerfile: ./client.web/Dockerfile
       context: .
     image: home-automation-web-client
+    restart: on-failure
     volumes:
       - ./client.web:/usr/src/app
       - /usr/src/app/node_modules
@@ -14,6 +15,7 @@ services:
 
   service.db:
     image: redis:4-alpine
+    restart: on-failure
     volumes:
       - ./service.db/data:/data
     ports:
@@ -24,6 +26,7 @@ services:
       dockerfile: ./service.registry/Dockerfile
       context: .
     image: home-automation-registry-service
+    restart: on-failure
     volumes:
       - ./service.registry:/usr/src/app
       - /usr/src/app/node_modules
@@ -41,6 +44,7 @@ services:
       dockerfile: ./service.event-bus/Dockerfile
       context: .
     image: home-automation-event-bus-service
+    restart: on-failure
     volumes:
       - .:/go/src/home-automation
     env_file:
@@ -51,6 +55,7 @@ services:
       dockerfile: ./service.controller.hue/Dockerfile
       context: .
     image: home-automation-hue-controller-service
+    restart: on-failure
     volumes:
       - ./service.controller.hue:/usr/src/app
       - /usr/src/app/node_modules
@@ -62,6 +67,7 @@ services:
       dockerfile: ./service.api-gateway/Dockerfile
       context: .
     image: home-automation-api-gateway-service
+    restart: on-failure
     volumes:
       - ./service.api-gateway:/usr/src/app
       - /usr/src/app/node_modules
