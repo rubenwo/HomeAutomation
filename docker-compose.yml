@@ -1,0 +1,94 @@
+version: "3"
+
+services:
+  client.web:
+    build:
+      dockerfile: ./client.web/Dockerfile
+      context: .
+    image: home-automation-web-client
+    restart: on-failure
+    volumes:
+      - ./client.web:/usr/src/app
+      - /usr/src/app/node_modules
+    env_file:
+      - ./.env
+
+  service.db:
+    image: redis:4-alpine
+    restart: on-failure
+    volumes:
+      - ./service.db/data:/data
+    ports:
+      - 6379:6379
+
+  service.registry:
+    build:
+      dockerfile: ./service.registry/Dockerfile
+      context: .
+    image: home-automation-registry-service
+    restart: on-failure
+    volumes:
+      - ./service.registry:/usr/src/app
+      - /usr/src/app/node_modules
+    env_file:
+      - ./.env
+    depends_on:
+      - service.db
+      - service.event-bus
+    links:
+      - service.db
+      - service.event-bus
+
+  service.event-bus:
+    build:
+      dockerfile: ./service.event-bus/Dockerfile
+      context: .
+    image: home-automation-event-bus-service
+    restart: on-failure
+    volumes:
+      - .:/go/src/home-automation
+    env_file:
+      - ./.env
+
+  service.controller.hue:
+    build:
+      dockerfile: ./service.controller.hue/Dockerfile
+      context: .
+    image: home-automation-hue-controller-service
+    restart: on-failure
+    volumes:
+      - ./service.controller.hue:/usr/src/app
+      - /usr/src/app/node_modules
+    env_file:
+      - ./.env
+
+  service.controller.ir:
+    build:
+      dockerfile: ./service.controller.ir/Dockerfile
+      context: .
+    image: home-automation-ir-controller-service
+    restart: on-failure
+    volumes:
+      - ./service.controller.ir:/usr/src/app
+      - /usr/src/app/node_modules
+    env_file:
+      - ./.env
+
+  service.api-gateway:
+    build:
+      dockerfile: ./service.api-gateway/Dockerfile
+      context: .
+    image: home-automation-api-gateway-service
+    restart: on-failure
+    volumes:
+      - ./service.api-gateway:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 80:80
+    env_file:
+      - ./.env
+    links:
+      - client.web
+      - service.controller.hue
+      - service.event-bus
+      - service.registry

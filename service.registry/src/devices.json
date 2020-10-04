@@ -1,0 +1,18 @@
+[
+    {
+        "identifier": "id1",
+        "name": "Device 1",
+        "device_type": "Hue",
+        "controller_name": "controller-123",
+        "ip_address": "192.168.2.123",
+        "room_identifier": "bedroom"
+    },
+    {
+        "identifier": "id2",
+        "name": "Device 2",
+        "device_type": "Hue",
+        "controller_name": "controller-123",
+        "ip_address": "192.168.790.2",
+        "room_identifier": "woonkamer"
+    }
+]

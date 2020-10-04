@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hue</string>
+    <string name="title_activity_recycle_view_item">RecycleViewItem</string>
+    <string name="status">Status:</string>
+    <string name="brightness">Brightness:</string>
+    <string name="color">Color:</string>
+    <string name="name">Name:</string>
+    <string name="time">Time:</string>
+    <string name="light">Lightbulb:</string>
+    <string name="schedules">Schedules:</string>
+    <string name="hueactivitytitle">Devices:</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+</resources>
